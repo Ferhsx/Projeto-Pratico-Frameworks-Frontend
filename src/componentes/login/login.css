@@ -1,0 +1,198 @@
+/* ---------------------------------------------------- */
+/* 1. RESET E VARIAVEIS GLOBAIS                         */
+/* ---------------------------------------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+    /* Cores Dark Mode */
+    --cor-primaria: #007bff; /* Azul Vibrante */
+    --cor-fundo-1: #101827; /* Fundo Escuro */
+    --cor-fundo-2: #1e293b; 
+    --cor-texto-claro: #f0f0f0; /* Texto quase branco */
+    --cor-texto-escuro: #c3c3c3; /* Texto auxiliar */
+    
+    /* Cores Glassmorphism */
+    --cor-glass: rgba(255, 255, 255, 0.05); /* Card quase transparente */
+    
+    /* Sombras e Bordas */
+    --sombra-card: 0 10px 30px rgba(0, 0, 0, 0.5); /* Sombra mais intensa */
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(-45deg, var(--cor-fundo-1), var(--cor-fundo-2), #0a101f, #0d121c);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    overflow: hidden; 
+}
+
+/* Animação do Degradê de Fundo */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ---------------------------------------------------- */
+/* 2. CARD DE LOGIN                                     */
+/* ---------------------------------------------------- */
+.login-page {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 50px 40px;
+    border-radius: 20px;
+    background: var(--cor-glass); 
+    box-shadow: var(--sombra-card);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    animation: fadeInScale 0.8s ease-out;
+    position: relative;
+    z-index: 1;
+}
+
+/* Animação de entrada do card */
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.login-form h1 {
+    color: var(--cor-texto-claro);
+    margin-bottom: 35px;
+    font-weight: 600;
+    font-size: 28px;
+    letter-spacing: 1px;
+}
+
+/* ---------------------------------------------------- */
+/* 3. CAMPOS DE INPUT                                   */
+/* ---------------------------------------------------- */
+.input-group {
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+.input-group label {
+    display: block;
+    color: var(--cor-texto-escuro);
+    font-size: 14px;
+    margin-bottom: 8px;
+    font-weight: 300;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 15px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--cor-texto-claro);
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.input-group input::placeholder {
+    color: var(--cor-texto-escuro);
+    opacity: 0.7;
+}
+
+.input-group input:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.4);
+}
+
+/* ---------------------------------------------------- */
+/* 4. BOTÃO E LINK                                      */
+/* ---------------------------------------------------- */
+.btn-login {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--cor-primaria);
+    color: var(--cor-texto-claro);
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    margin-top: 10px;
+}
+
+.btn-login:hover {
+    background-color: #005bb5;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+}
+
+.link-forgot {
+    display: block;
+    margin-top: 25px;
+    color: var(--cor-texto-escuro);
+    font-size: 14px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.link-forgot:hover {
+    color: var(--cor-primaria);
+    text-decoration: underline;
+}
+
+/* ---------------------------------------------------- */
+/* 5. MENSAGENS DE ERRO                                 */
+/* ---------------------------------------------------- */
+.error-message {
+    color: #ff6b6b;
+    background-color: rgba(255, 0, 0, 0.1);
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    border: 1px solid rgba(255, 0, 0, 0.1);
+}
+
+/* ---------------------------------------------------- */
+/* 6. RESPONSIVIDADE                                    */
+/* ---------------------------------------------------- */
+@media (max-width: 480px) {
+    .login-container {
+        padding: 30px 25px;
+        margin: 15px;
+    }
+    
+    .login-form h1 {
+        font-size: 24px;
+        margin-bottom: 25px;
+    }
+    
+    .input-group input {
+        padding: 13px 16px;
+    }
+    
+    .btn-login {
+        padding: 14px;
+        font-size: 16px;
+    }
+}
