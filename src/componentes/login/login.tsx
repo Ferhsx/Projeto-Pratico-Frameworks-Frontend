@@ -1,36 +1,45 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
-import api from "../../api/api";
+import api from "../../api/api"; //
+
 function Login(){
-    const navigate = useNavigate()
+    const navigate = useNavigate() //
     //url   localhost:5123/login?mensagem=Token Inválido
     //para pegar a mensagem passada pela url usamos o useSearchParams()
-    const [searchParams] = useSearchParams()
+    const [searchParams] = useSearchParams() //
     //Dentro do searchParans eu consigo utilizar o get para pegar 
     // o valor da variável passada pela URL
-    const mensagem = searchParams.get("mensagem")
+    const mensagem = searchParams.get("mensagem") //
 
     //Função chamada quando clicamos no botão do formulário
     function handleSubmit(event:React.FormEvent<HTMLFormElement>){
-        event.preventDefault()
+        event.preventDefault() //
         //Vamos pegar o que a pessoa digitou no formulário
-        const formData = new FormData(event.currentTarget)
-        const email = formData.get("email")
-        const senha = formData.get("senha")
+        const formData = new FormData(event.currentTarget) //
+        const email = formData.get("email") //
+        const senha = formData.get("senha") //
 
         //chamar a API.post para mandar o login e senha
-        api.post("/login",{
-            email,
-            senha
+        api.post("/login",{ //
+            email, //
+            senha //
         }).then(resposta=>{
-            if(resposta.status===200){
-                localStorage.setItem("token",resposta?.data?.token)
-                navigate("/")
+            // 1. Verifica se a resposta foi 200 e se o token existe nos dados
+            if(resposta.status===200 && resposta?.data?.token){ //
+                
+                // 2. Armazena o Token
+                localStorage.setItem("token",resposta.data.token)
+                
+                // 3. Armazena o Tipo de Usuário (NOVA LINHA)
+                // O backend agora retorna tipoUsuario no corpo da resposta
+                localStorage.setItem("tipoUsuario", resposta.data.tipoUsuario)
+                
+                navigate("/") //
             }
         }).catch((error:any)=>{
             const msg = error?.response?.data?.mensagem || 
                         error?.mensagem || 
-                        "Erro Desconhecido!"
-            navigate(`/login?mensagem=${encodeURIComponent(msg)}`)
+                        "Erro Desconhecido!" //
+            navigate(`/login?mensagem=${encodeURIComponent(msg)}`) //
         })
     }
 
