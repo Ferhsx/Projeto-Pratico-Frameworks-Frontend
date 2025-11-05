@@ -8,6 +8,7 @@ import Header from './componentes/Header/Header'
 import Login from './componentes/login/login'
 import Cadastrar from './componentes/login/cadastro'
 import Error from './componentes/erro/erro'
+import Secreto from './componentes/secret/elitinho'
 
 type ProdutoType = {
   _id: string,
@@ -22,10 +23,28 @@ function PaginaProdutos() {
   const tipoUsuario = localStorage.getItem("tipoUsuario"); 
 
   useEffect(() => {
-    api.get("/produtos")
-    .then((response) => setProdutos(response.data))
-    .catch((error) => console.error('Error fetching data:', error))
-  }, [])
+    async function fetchProdutos() {
+      try {
+        const response = await api.get("/produtos")
+        console.log('GET /produtos response.data:', response.data)
+        // Normaliza para array: aceita resposta direta ([]) ou { produtos: [...] }
+        const lista = Array.isArray(response.data)
+          ? response.data
+          : Array.isArray(response.data?.produtos)
+            ? response.data.produtos
+            : []
+        setProdutos(lista)
+      } catch (error: any) {
+        console.error('Error fetching data:', {
+          status: error?.response?.status,
+          data: error?.response?.data,
+          message: error?.message
+        })
+        setProdutos([]) // evitar undefined
+      }
+    }
+    fetchProdutos()
+   }, [])
 
   function handleForm(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -38,10 +57,17 @@ function PaginaProdutos() {
       descricao: formData.get('descricao') as string
     }
     api.post("/produtos", data)
-      .then((response) => setProdutos([...produtos, response.data]))
+      .then((response) => {
+        const novo = Array.isArray(response.data) ? response.data[0] : response.data
+        if (novo && typeof novo === 'object') setProdutos(prev => [...prev, novo])
+      })
       .catch((error) => {
-       console.error('Error posting data:', error)
-       alert('Error posting data:' + error?.mensagem)
+       console.error('Error posting data:', {
+         status: error?.response?.status,
+         data: error?.response?.data,
+         message: error?.message
+       })
+       alert('Error posting data: veja console')
       })
     form.reset()
   }
@@ -73,15 +99,19 @@ function PaginaProdutos() {
 
       <div>Lista de Produtos</div>
       {
-        produtos.map((produto) => (
-          <div key={produto._id}>
-            <h2>{produto.nome}</h2>
-            <p>R$ {produto.preco}</p>
-            <img src={produto.urlfoto} alt={produto.nome} width="200" />
-            <p>{produto.descricao}</p>
-            <button onClick={() => adicionarCarrinho(produto._id)}>Adicionar ao carrinho</button>
-          </div>
-        ))
+        Array.isArray(produtos) && produtos.length > 0 ? (
+          produtos.map((produto) => (
+            <div key={produto._id}>
+              <h2>{produto.nome}</h2>
+              <p>R$ {produto.preco?.toFixed?.(2) ?? produto.preco}</p>
+              {produto.urlfoto && <img src={produto.urlfoto} alt={produto.nome} width="200" />}
+              <p>{produto.descricao}</p>
+              <button onClick={() => adicionarCarrinho(produto._id)}>Adicionar ao carrinho</button>
+            </div>
+          ))
+        ) : (
+          <p>Nenhum produto encontrado.</p>
+        )
       }
     </>
   )
@@ -108,6 +138,9 @@ function App() {
           <Route path="/cadastro" element={<Cadastrar />} />
 
           <Route path="/error" element={<Error />} />
+
+          {/* Rota para página secreta */}
+          <Route path="*" element={<Secreto />} />
           
         </Routes>
       </main>
