@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom' 
 import Header from './componentes/Header/Header'
 import Login from './componentes/login/login'
+import Cadastrar from './componentes/login/cadastro'
 
 type ProdutoType = {
   _id: string,
@@ -101,6 +102,9 @@ function App() {
           
           {/* Rota para a página de login */}
           <Route path="/login" element={<Login />} />
+
+          {/* Rota para a página de cadastro */}
+          <Route path="/cadastro" element={<Cadastrar />} />
           
         </Routes>
       </main>
