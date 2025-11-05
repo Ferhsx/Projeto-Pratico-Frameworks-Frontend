@@ -7,6 +7,7 @@ import { Routes, Route } from 'react-router-dom'
 import Header from './componentes/Header/Header'
 import Login from './componentes/login/login'
 import Cadastrar from './componentes/login/cadastro'
+import Error from './componentes/erro/erro'
 
 type ProdutoType = {
   _id: string,
@@ -105,6 +106,8 @@ function App() {
 
           {/* Rota para a página de cadastro */}
           <Route path="/cadastro" element={<Cadastrar />} />
+
+          <Route path="/error" element={<Error />} />
           
         </Routes>
       </main>
