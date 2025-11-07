@@ -13,7 +13,30 @@
 .user-info {
     display: flex;
     align-items: center;
-    gap: 15px; /* Espaço entre o nome e o botão */
+    gap: 20px; /* Aumenta o espaçamento entre os itens */
+}
+
+.cart-link {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.cart-link:hover {
+    background-color: #e0e0e0;
+}
+
+.cart-icon {
+    font-size: 1.2em;
+}
+
+.cart-text {
+    font-size: 0.9em;
 }
 
 .user-info button {

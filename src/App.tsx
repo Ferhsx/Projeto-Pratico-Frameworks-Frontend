@@ -9,6 +9,7 @@ import Login from './componentes/login/login'
 import Cadastrar from './componentes/login/cadastro'
 import Error from './componentes/erro/erro'
 import Secreto from './componentes/secret/elitinho'
+import Carrinho from './componentes/Carrinho/Carrinho'
 
 type ProdutoType = {
   _id: string,
@@ -138,6 +139,9 @@ function App() {
           <Route path="/cadastro" element={<Cadastrar />} />
 
           <Route path="/error" element={<Error />} />
+
+          {/* Rota para o carrinho */}
+          <Route path="/carrinho/:usuarioId" element={<Carrinho />} />
 
           {/* Rota para página secreta */}
           <Route path="*" element={<Secreto />} />

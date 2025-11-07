@@ -1,7 +1,7 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 // Importa a função de logout que já existe
-import { handleLogout } from '../login/auth'; 
-import './Header.css'; // Vamos criar este arquivo para o estilo
+import { handleLogout } from '../login/auth';
+import './Header.css';
 
 function Header() {
     const navigate = useNavigate();
@@ -17,10 +17,24 @@ function Header() {
     }
 
     // Se estiver logado, exibe as informações
+    const usuarioId = localStorage.getItem('usuarioId');
+    
     return (
         <header className="app-header">
             <div className="user-info">
                 <span>Olá, <strong>{nome}</strong> ({tipo})</span>
+                
+                {usuarioId && (
+                    <Link 
+                        to={`/carrinho/${usuarioId}`}
+                        className="cart-link"
+                        title="Ver Carrinho"
+                    >
+                        <span className="cart-icon">🛒</span>
+                        <span className="cart-text">Carrinho</span>
+                    </Link>
+                )}
+                
                 <button onClick={() => handleLogout(navigate)}>Sair</button>
             </div>
         </header>
