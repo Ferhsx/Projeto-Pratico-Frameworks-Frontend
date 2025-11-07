@@ -1,14 +1,20 @@
 import axios from 'axios'
 
+console.log('URL da API:', import.meta.env.VITE_API_URL)
 const api = axios.create({
-    baseURL:import.meta.env.VITE_API_URL
+    baseURL: import.meta.env.VITE_API_URL,
+    timeout: 5000 // 5 segundos de timeout
 })
 //Nós vamos criar um middleware para adicionar o token na requisição
 
-api.interceptors.request.use((config) =>{
+api.interceptors.request.use((config) => {
     const token = localStorage.getItem("token")
-    if(token)
+    console.log('Request to:', config.url)
+    console.log('Base URL:', config.baseURL)
+    if (token) {
+        console.log('Adding token to request')
         config.headers.Authorization = `Bearer ${token}`
+    }
     return config
 })
 

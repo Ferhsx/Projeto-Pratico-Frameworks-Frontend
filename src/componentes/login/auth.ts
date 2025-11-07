@@ -10,6 +10,9 @@ export function handleLogout(navigate: NavigateFunction) {
     // 2. Remove o Tipo de Usuário do localStorage
     localStorage.removeItem("tipoUsuario"); 
 
+    localStorage.removeItem("nomeUsuario");
+    localStorage.removeItem("usuarioId");
+
     // 3. Redireciona o usuário para a tela de login
     navigate("/login");
     

@@ -5,11 +5,7 @@ export const carrinhoService = {
     return api.post('/adicionarItem', { produtoId, quantidade });
   },
 
-  async removerItem(usuarioId: string, produtoId: string) {
-    return api.post('/removerItem', { usuarioId, produtoId });
-  },
-
-  async listarCarrinho(usuarioId: string) {
-    return api.get(`/carrinho/${usuarioId}`);
+  async listarCarrinho() {
+    return api.get(`/carrinho`);
   }
 };
