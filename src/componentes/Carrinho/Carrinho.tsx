@@ -30,7 +30,7 @@ export default function Carrinho() {
   const carregarCarrinho = async () => {
     try {
       setLoading(true);
-      const response = await carrinhoService.listarCarrinho(usuarioId!);
+      const response = await carrinhoService.listarCarrinho();
       setCarrinho({
         itens: response.data.itens || [],
         total: response.data.total || 0
@@ -43,18 +43,6 @@ export default function Carrinho() {
     }
   };
 
-  const removerItem = async (produtoId: string) => {
-    if (!usuarioId) return;
-    
-    try {
-      await carrinhoService.removerItem(usuarioId, produtoId);
-      // Atualiza o carrinho após remoção
-      carregarCarrinho();
-    } catch (err) {
-      console.error('Erro ao remover item:', err);
-      alert('Erro ao remover item do carrinho');
-    }
-  };
 
   if (loading) return <div>Carregando carrinho...</div>;
   if (error) return <div className="text-red-500">{error}</div>;
@@ -87,12 +75,6 @@ export default function Carrinho() {
                   <p>Preço unitário: R$ {item.precoUnitario.toFixed(2)}</p>
                   <p>Subtotal: R$ {(item.precoUnitario * item.quantidade).toFixed(2)}</p>
                 </div>
-                <button
-                  onClick={() => removerItem(item.produtoId)}
-                  className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                >
-                  Remover
-                </button>
               </div>
             ))}
           </div>
