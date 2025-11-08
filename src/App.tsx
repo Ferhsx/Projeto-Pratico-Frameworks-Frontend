@@ -10,6 +10,7 @@ import Cadastrar from './componentes/login/cadastro'
 import Error from './componentes/erro/erro'
 import Secreto from './componentes/secret/elitinho'
 import Carrinho from './componentes/Carrinho/Carrinho'
+import ListarCarrinhos from './componentes/admin/listarCarrinhos'
 
 type ProdutoType = {
   _id: string,
@@ -121,6 +122,7 @@ function PaginaProdutos() {
 
 // O App() CORRIGIDO (Sem o BrowserRouter)
 function App() {
+  const tipoUsuario = localStorage.getItem("tipoUsuario"); 
   return (
     <> 
       <Header /> {/* Mostra o Header em TODAS as páginas */}
@@ -145,6 +147,11 @@ function App() {
 
           {/* Rota para página secreta */}
           <Route path="*" element={<Secreto />} />
+
+          {/* Rota para listar carrinhos */}
+          {tipoUsuario === 'admin' && (
+            <Route path="/admin/carrinhos" element={<ListarCarrinhos />} />
+          )}
           
         </Routes>
       </main>

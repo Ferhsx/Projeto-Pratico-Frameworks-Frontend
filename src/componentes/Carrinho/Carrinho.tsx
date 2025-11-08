@@ -73,6 +73,12 @@ export default function Carrinho() {
                   <h3 className="font-semibold">{item.nome}</h3>
                   <p>Quantidade: {item.quantidade}</p>
                   <p>Preço unitário: R$ {item.precoUnitario.toFixed(2)}</p>
+                  <button
+                    onClick={() => carrinhoService.removerItem(item.produtoId)}
+                    className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                  >
+                    Remover
+                  </button>
                   <p>Subtotal: R$ {(item.precoUnitario * item.quantidade).toFixed(2)}</p>
                 </div>
               </div>
@@ -98,6 +104,12 @@ export default function Carrinho() {
                 onClick={() => alert('Finalizar compra não implementado')}
               >
                 Finalizar Compra
+              </button>
+              <button
+                onClick={() => carrinhoService.removerCarrinho(usuarioId ?? '')}
+                className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100"
+              >
+                Remover Carrinho
               </button>
             </div>
           </div>

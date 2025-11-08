@@ -35,6 +35,15 @@ function Header() {
                     </Link>
                 )}
                 
+                {tipo === 'admin' && (
+                    <Link 
+                        to="/admin/carrinhos"
+                        style={{ marginLeft: '20px', fontWeight: 'bold' }}
+                    >
+                        Painel Admin
+                    </Link>
+                )}
+                
                 <button onClick={() => handleLogout(navigate)}>Sair</button>
             </div>
         </header>
