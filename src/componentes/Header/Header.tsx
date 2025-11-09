@@ -37,7 +37,7 @@ function Header() {
                 
                 {tipo === 'admin' && (
                     <Link 
-                        to="/admin/carrinhos"
+                        to="/admin/dashboard"
                         style={{ marginLeft: '20px', fontWeight: 'bold' }}
                     >
                         Painel Admin

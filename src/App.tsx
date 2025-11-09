@@ -11,6 +11,7 @@ import Error from './componentes/erro/erro'
 import Secreto from './componentes/secret/elitinho'
 import Carrinho from './componentes/Carrinho/Carrinho'
 import ListarCarrinhos from './componentes/admin/listarCarrinhos'
+import DashboardAdmin from './componentes/admin/drashAdmin'
 
 type ProdutoType = {
   _id: string,
@@ -150,8 +151,12 @@ function App() {
 
           {/* Rota para listar carrinhos */}
           {tipoUsuario === 'admin' && (
+            <>
             <Route path="/admin/carrinhos" element={<ListarCarrinhos />} />
+            <Route path="/admin/dashboard" element={<DashboardAdmin />} />
+            </>
           )}
+          
           
         </Routes>
       </main>
