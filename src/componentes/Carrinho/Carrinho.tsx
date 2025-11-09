@@ -20,6 +20,7 @@ export default function Carrinho() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const [filtro, setFiltro] = useState('');
 
   useEffect(() => {
     if (usuarioId) {
@@ -43,6 +44,10 @@ export default function Carrinho() {
     }
   };
 
+  const itensFiltrados = carrinho.itens.filter(item =>
+    item.nome.toLowerCase().includes(filtro.toLowerCase())
+  );
+
 
   if (loading) return <div>Carregando carrinho...</div>;
   if (error) return <div className="text-red-500">{error}</div>;
@@ -50,11 +55,11 @@ export default function Carrinho() {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Meu Carrinho</h1>
-      
+
       {carrinho.itens.length === 0 ? (
         <div className="text-center py-8">
           <p className="text-gray-600">Seu carrinho está vazio</p>
-          <button 
+          <button
             onClick={() => navigate('/')}
             className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
           >
@@ -63,34 +68,47 @@ export default function Carrinho() {
         </div>
       ) : (
         <>
-          <div className="space-y-4">
-            {carrinho.itens.map((item) => (
-              <div 
-                key={item.produtoId} 
-                className="border p-4 rounded-lg flex justify-between items-center"
-              >
-                <div>
-                  <h3 className="font-semibold">{item.nome}</h3>
-                  <p>Quantidade: {item.quantidade}</p>
-                  <p>Preço unitário: R$ {item.precoUnitario.toFixed(2)}</p>
-                  <button
-                    onClick={() => carrinhoService.removerItem(item.produtoId)}
-                    className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                  >
-                    Remover
-                  </button>
-                  <p>Subtotal: R$ {(item.precoUnitario * item.quantidade).toFixed(2)}</p>
-                </div>
-              </div>
-            ))}
+          <div className="mb-4">
+            <input
+              type="text"
+              placeholder="Filtrar itens no carrinho pelo nome..."
+              value={filtro}
+              onChange={(e) => setFiltro(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded"
+            />
           </div>
-          
+          <div className="space-y-4">
+            {itensFiltrados.length > 0 ? (
+              itensFiltrados.map((item) => (
+                <div
+                  key={item.produtoId}
+                  className="border p-4 rounded-lg flex justify-between items-center"
+                >
+                  <div>
+                    <h3 className="font-semibold">{item.nome}</h3>
+                    <p>Quantidade: {item.quantidade}</p>
+                    <p>Preço unitário: R$ {item.precoUnitario.toFixed(2)}</p>
+                    <button
+                      onClick={() => carrinhoService.removerItem(item.produtoId)}
+                      className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                    >
+                      Remover
+                    </button>
+                    <p>Subtotal: R$ {(item.precoUnitario * item.quantidade).toFixed(2)}</p>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-600 text-center py-4">Nenhum item encontrado com o filtro "{filtro}".</p>
+            )}
+          </div>
+
           <div className="mt-6 p-4 bg-gray-100 rounded-lg">
             <div className="flex justify-between items-center">
               <span className="text-lg font-semibold">Total:</span>
               <span className="text-xl font-bold">R$ {carrinho.total.toFixed(2)}</span>
             </div>
-            
+
             <div className="mt-4 flex justify-between">
               <button
                 onClick={() => navigate('/')}
@@ -98,8 +116,8 @@ export default function Carrinho() {
               >
                 Continuar Comprando
               </button>
-              
-              <button 
+
+              <button
                 className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600"
                 onClick={() => alert('Finalizar compra não implementado')}
               >
