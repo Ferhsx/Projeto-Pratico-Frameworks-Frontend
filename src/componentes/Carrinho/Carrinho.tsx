@@ -48,6 +48,24 @@ export default function Carrinho() {
     item.nome.toLowerCase().includes(filtro.toLowerCase())
   );
 
+  const handleAtualizarQuantidade = async (produtoId: string, novaQuantidade: number) => {
+    // Validação simples para não permitir quantidades inválidas
+    if (novaQuantidade < 1) {
+      return;
+    }
+
+    try {
+      // Chama a função do nosso serviço
+      await carrinhoService.atualizarQuantidade(produtoId, novaQuantidade);
+      // Após o sucesso, recarrega os dados do carrinho para garantir que tudo esteja atualizado
+      carregarCarrinho();
+    } catch (err) {
+      console.error('Erro ao atualizar quantidade:', err);
+      alert('Não foi possível atualizar a quantidade do item.');
+    }
+  };
+
+
 
   if (loading) return <div>Carregando carrinho...</div>;
   if (error) return <div className="text-red-500">{error}</div>;
@@ -94,7 +112,16 @@ export default function Carrinho() {
                     >
                       Remover
                     </button>
-                    <p>Subtotal: R$ {(item.precoUnitario * item.quantidade).toFixed(2)}</p>
+                    <div className="flex items-center gap-2 mt-2">
+                      <label>Quantidade:</label>
+                      <input
+                        type="number"
+                        min="1"
+                        value={item.quantidade}
+                        onChange={(e) => handleAtualizarQuantidade(item.produtoId, parseInt(e.target.value))}
+                        className="w-16 p-1 border border-gray-300 rounded text-center"
+                      />
+                    </div>
                   </div>
                 </div>
               ))
