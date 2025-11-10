@@ -18,7 +18,7 @@ export const carrinhoService = {
     return api.get(`/carrinho`);
   },
   async atualizarQuantidade(produtoId: string, quantidade: number) {
-    return api.patch('/atualizarQuantidade', { produtoId, quantidade });
+    return api.patch('/alterarQuantidade', { produtoId, quantidade });
   },
    async listarTodos() {
     return api.get(`/carrinhos`);
