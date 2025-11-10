@@ -7,8 +7,8 @@ export const carrinhoService = {
   async removerItem(produtoId: string) {
     return api.post('/removerItem', { produtoId });
   },
-  async removerCarrinho(usuarioId: string) {
-    return api.delete(`/carrinho/${usuarioId}`);
+  async removerCarrinho() {
+    return api.delete(`/carrinho`);
   },
   
   async removerCarrinhoPorId(carrinhoId: string) {

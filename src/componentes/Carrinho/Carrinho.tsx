@@ -162,7 +162,7 @@ export default function Carrinho() {
                 Finalizar Compra
               </button>
               <button
-                onClick={() => carrinhoService.removerCarrinho(usuarioId ?? '')}
+                onClick={() => carrinhoService.removerCarrinho()}
                 className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100"
               >
                 Remover Carrinho
