@@ -48,6 +48,9 @@ export default function Carrinho() {
     item.nome.toLowerCase().includes(filtro.toLowerCase())
   );
 
+  // Soma das quantidades: total de itens no carrinho (mostra a somatória dos itens, não o preço)
+  const totalItens = carrinho.itens.reduce((acc, item) => acc + (item.quantidade || 0), 0);
+
   const handleAtualizarQuantidade = async (produtoId: string, novaQuantidade: number) => {
     // Validação simples para não permitir quantidades inválidas
     if (novaQuantidade < 1) {
@@ -86,6 +89,14 @@ export default function Carrinho() {
         </div>
       ) : (
         <>
+          {/* Exibir o total atualizado do carrinho */}
+          {carrinho.itens.length > 0 && (
+            <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded flex justify-between items-center">
+              <span className="font-semibold text-lg">Total atualizado do carrinho:</span>
+              <span className="text-xl font-bold text-green-700">{totalItens}</span>
+            </div>
+          )}
+
           <div className="mb-4">
             <input
               type="text"
