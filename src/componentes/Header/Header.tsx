@@ -20,10 +20,48 @@ function Header() {
     const usuarioId = localStorage.getItem('usuarioId');
     
     return (
-        <header className="app-header">
-            <div className="user-info">
-                <span>Olá, <strong>{nome}</strong> ({tipo})</span>
-                
+        <header className="bg-epic-gray-dark p-4 flex justify-between items-center border-b border-gray-700">
+            {/* Lado Esquerdo */}
+            <div className="flex items-center gap-8">
+                <Link to="/" className="text-2xl font-bold text-white uppercase">
+                    Epico Gomes
+                </Link>
+                <nav className="hidden md:flex gap-6">
+                    <a href="#" className="text-gray-300 hover:text-white">Loja</a>
+                    <a href="#" className="text-gray-300 hover:text-white">Distribuir</a>
+                </nav>
+            </div>
+
+            {/* Lado Direito */}
+            <div className="flex items-center gap-4">
+                {nome ? (
+                    <>
+                        <span className="text-gray-300">Olá, {nome}</span>
+                        <button 
+                            onClick={() => handleLogout(navigate)}
+                            className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                        >
+                            Sair
+                        </button>
+                    </>
+                ) : (
+                    <button 
+                        onClick={() => navigate('/login')}
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        Entrar
+                    </button>
+                )}
+
+                {tipo === 'admin' && (
+                    <Link 
+                        to="/admin/dashboard"
+                        style={{ marginLeft: '20px', fontWeight: 'bold' }}
+                    >
+                        Painel Admin
+                    </Link>
+                )}
+
                 {usuarioId && (
                     <Link 
                         to={`/carrinho/${usuarioId}`}
@@ -34,17 +72,6 @@ function Header() {
                         <span className="cart-text">Carrinho</span>
                     </Link>
                 )}
-                
-                {tipo === 'admin' && (
-                    <Link 
-                        to="/admin/dashboard"
-                        style={{ marginLeft: '20px', fontWeight: 'bold' }}
-                    >
-                        Painel Admin
-                    </Link>
-                )}
-                
-                <button onClick={() => handleLogout(navigate)}>Sair</button>
             </div>
         </header>
     );
