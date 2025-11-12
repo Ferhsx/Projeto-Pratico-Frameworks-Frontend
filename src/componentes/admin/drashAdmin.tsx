@@ -42,7 +42,7 @@ export default function DashboardAdmin() {
     return (
         <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
             <h1>Dashboard Administrativo</h1>
-            
+
             <div style={{ display: 'flex', gap: '20px', margin: '20px 0' }}>
                 <div style={{ border: '1px solid #ccc', padding: '20px', borderRadius: '8px', textAlign: 'center' }}>
                     <h2>Carrinhos Ativos</h2>
@@ -74,7 +74,12 @@ export default function DashboardAdmin() {
             )}
 
             <hr style={{ margin: '30px 0' }} />
-            <Link to="/admin/carrinhos">Ver a lista detalhada de todos os carrinhos</Link>
+            <Link to="/admin/carrinhos" className="text-blue-400 hover:underline">
+                <p className="font-bold text-lg">Ver a lista detalhada de todos os carrinhos</p>
+            </Link>
+            <Link to="/admin/produtos" className="text-blue-400 hover:underline">
+                <p className="font-bold text-lg">Gerenciar Produtos (Cadastrar/Editar)</p>
+            </Link>
         </div>
     );
 }

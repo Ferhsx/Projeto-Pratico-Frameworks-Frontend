@@ -8,9 +8,10 @@ import Secreto from './componentes/secret/elitinho'
 import Carrinho from './componentes/Carrinho/Carrinho'
 import ListarCarrinhos from './componentes/admin/listarCarrinhos'
 import DashboardAdmin from './componentes/admin/drashAdmin'
-import ProdutosLista from './componentes/ProdutosLista/ProdutosLista'
+import ProdutosLista from './pages/GerenciadorProdutos'
 import HomePage from './pages/HomePage';
 import { useEffect } from 'react'
+import DetalheProdutoPage from './componentes/ProdutosLista/Produto'
 
 
 function PaginaProdutos() {
@@ -58,6 +59,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<Cadastrar />} />
           <Route path="/carrinho" element={<Carrinho />} />
+
           
           {/* Rota protegida para área secreta */}
           <Route 
@@ -86,9 +88,12 @@ function App() {
               </ProtectedRoute>
             } 
           />
+          <Route path="/admin/produtos" element={<ProdutosLista />} />
           
           {/* Rota de erro genérica */}
           <Route path="/error" element={<Error />} />
+
+          <Route path="/produto/:id" element={<DetalheProdutoPage />} />
           
           {/* Rota 404 - Redireciona para a página de erro com a mensagem */}
           <Route path="*" element={
