@@ -14,11 +14,6 @@ import { useEffect } from 'react'
 import DetalheProdutoPage from './componentes/ProdutosLista/Produto'
 
 
-function PaginaProdutos() {
-  return <ProdutosLista />
-}
-
-
 // Componente para redirecionar com mensagem de erro
 function ErrorRedirect({ message }: { message: string }) {
   const location = useLocation();

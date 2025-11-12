@@ -109,14 +109,4 @@ function SidebarDestaques({ produtos }: { produtos: ProdutoType[] }) {
     </div>
   );
 
-  (tipoUsuario === 'admin' && (
-    <div className="mt-8">
-      <button
-        onClick={() => handleAdicionarCarrinho(produto._id)}
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg py-4 px-8 rounded-lg transition-transform duration-200 hover:scale-105"
-      >
-        Adicionar ao Carrinho
-      </button>
-    </div>
-  ))
 }
