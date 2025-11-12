@@ -143,6 +143,18 @@ export default function ProdutosLista() {
     }
   }
 
+  function handleDelete(produtoId: string) {
+    api.delete(`/produtos/${produtoId}`)
+      .then(() => {
+        setProdutos(produtos.filter(p => p._id !== produtoId));
+        alert('Produto excluído com sucesso!');
+      })
+      .catch(error => {
+        console.error("Erro ao excluir produto:", error);
+        alert("Falha ao excluir o produto.");
+      });
+  }
+
   function handleSaveEdit(produtoAtualizado: ProdutoType) {
     api.put(`/produtos/${produtoAtualizado._id}`, produtoAtualizado)
       .then(() => {
@@ -259,7 +271,7 @@ export default function ProdutosLista() {
             <p className="text-gray-400">Nenhum produto encontrado.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
             {produtos.map((produto) => (
               <div key={produto._id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
                 <div className="p-4">
@@ -283,13 +295,22 @@ export default function ProdutosLista() {
                     </button>
                     
                     {tipoUsuario === 'admin' && !produtoEmEdicao && (
-                      <button 
-                        onClick={() => setProdutoEmEdicao(produto)}
-                        className="p-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors flex items-center justify-center"
-                        title="Editar produto"
-                      >
-                        ✏️
-                      </button>
+                      <div className="flex gap-2">
+                        <button 
+                          onClick={() => setProdutoEmEdicao(produto)}
+                          className="p-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors flex items-center justify-center"
+                          title="Editar produto"
+                        >
+                          Editar
+                        </button>
+                        <button 
+                          onClick={() => handleDelete(produto._id)}
+                          className="p-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors flex items-center justify-center"
+                          title="Excluir produto"
+                        >
+                          Excluir
+                        </button>
+                      </div>
                     )}
                   </div>
                 </div>

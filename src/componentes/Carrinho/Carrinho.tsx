@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { carrinhoService } from '../../services/carrinhoService';
 
 type ItemCarrinho = {
@@ -7,6 +7,7 @@ type ItemCarrinho = {
   quantidade: number;
   precoUnitario: number;
   nome: string;
+  urlfoto?: string;
 };
 
 type Carrinho = {
@@ -15,7 +16,6 @@ type Carrinho = {
 };
 
 export default function Carrinho() {
-  const { usuarioId } = useParams<{ usuarioId: string }>();
   const [carrinho, setCarrinho] = useState<Carrinho>({ itens: [], total: 0 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -23,22 +23,36 @@ export default function Carrinho() {
   const [filtro, setFiltro] = useState('');
 
   useEffect(() => {
-    if (usuarioId) {
-      carregarCarrinho();
-    }
-  }, [usuarioId]);
+    carregarCarrinho();
+  }, []);
 
   const carregarCarrinho = async () => {
     try {
       setLoading(true);
       const response = await carrinhoService.listarCarrinho();
-      setCarrinho({
-        itens: response.data.itens || [],
-        total: response.data.total || 0
-      });
-    } catch (err) {
+      
+      // Verifica se o usuário está autenticado
+      if (response.status === 401) {
+        navigate('/login');
+        return;
+      }
+      
+      // Verifica se a resposta contém os dados esperados
+      if (response.data) {
+        setCarrinho({
+          itens: Array.isArray(response.data.itens) ? response.data.itens : [],
+          total: Number(response.data.total) || 0
+        });
+      } else {
+        setCarrinho({ itens: [], total: 0 });
+      }
+    } catch (err: any) {
       console.error('Erro ao carregar carrinho:', err);
-      setError('Erro ao carregar o carrinho');
+      if (err?.response?.status === 401) {
+        navigate('/login');
+      } else {
+        setError('Erro ao carregar o carrinho. Tente novamente mais tarde.');
+      }
     } finally {
       setLoading(false);
     }
@@ -92,7 +106,7 @@ export default function Carrinho() {
           {/* Exibir o total atualizado do carrinho */}
           {carrinho.itens.length > 0 && (
             <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded flex justify-between items-center">
-              <span className="font-semibold text-lg">Total atualizado do carrinho:</span>
+              <span className="font-semibold text-lg text-gray-700">Total atualizado do carrinho:</span>
               <span className="text-xl font-bold text-green-700">{totalItens}</span>
             </div>
           )}

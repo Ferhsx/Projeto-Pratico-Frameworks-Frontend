@@ -1,16 +1,18 @@
 // Local: src/componentes/login/login.tsx
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; // Importe o Link
 import api from "../../api/api";
 import { useState } from "react";
 
 function Login() {
     const navigate = useNavigate();
     const [mensagemErro, setMensagemErro] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false); // Bônus: Estado de carregamento
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        setMensagemErro(null); 
+        setMensagemErro(null);
+        setLoading(true); // Ativa o estado de carregamento
 
         const formData = new FormData(event.currentTarget);
         const email = formData.get("email");
@@ -20,49 +22,90 @@ function Login() {
             email,
             senha
         }).then(resposta => {
-            // Verifica se a resposta foi bem-sucedida e se os dados existem
             if (resposta.status === 200 && resposta.data) {
-
-                // 👇 AQUI ESTÁ A CORREÇÃO CRÍTICA 👇
-                // Salva TODOS os dados recebidos da API no localStorage
                 localStorage.setItem("token", resposta.data.token);
                 localStorage.setItem("tipoUsuario", resposta.data.tipoUsuario);
                 localStorage.setItem("nomeUsuario", resposta.data.nome);
                 localStorage.setItem("usuarioId", resposta.data.usuarioId);
-                
-                // Redireciona para a página principal
                 navigate("/");
-
             } else {
-                // Caso a resposta seja 200 mas não tenha dados, define um erro genérico
                 setMensagemErro("Resposta inválida do servidor.");
             }
         }).catch((error: any) => {
-            const msg = error?.response?.data?.mensagem ||
-                error?.message ||
-                "Erro Desconhecido!";
-            
-            setMensagemErro(msg); 
+            const msg = error?.response?.data?.mensagem || error?.message || "Erro Desconhecido!";
+            setMensagemErro(msg);
+        }).finally(() => {
+            setLoading(false); // Desativa o estado de carregamento, não importa o resultado
         });
     }
 
     return (
-        <>
-            <h1>Login</h1>
-            
-            {mensagemErro && <p style={{ color: 'red' }}>{mensagemErro}</p>} 
-            
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="email">Email:</label>
-                <input type="text" name="email" id="email" />
-                <br />
-                <label htmlFor="senha">Senha:</label>
-                <input type="password" name="senha" id="senha" />
-                <br />
-                <button type="submit">Entrar</button>
-            </form>
-        </>
-    )
+        <div className="flex items-center justify-center min-h-screen bg-epic-dark px-4">
+            <div className="w-full max-w-md p-8 space-y-8 bg-epic-gray-dark rounded-lg shadow-lg">
+                
+                <h1 className="text-3xl font-bold text-center text-white">
+                    Entrar na sua Conta
+                </h1>
+                
+                {/* Exibição da mensagem de erro */}
+                {mensagemErro && (
+                    <div className="p-3 bg-red-800 border border-red-600 text-red-200 rounded-md text-center">
+                        {mensagemErro}
+                    </div>
+                )} 
+                
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Campo de Email */}
+                    <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
+                            Endereço de Email
+                        </label>
+                        <input 
+                            type="email" 
+                            name="email" 
+                            id="email" 
+                            required
+                            className="w-full p-3 rounded bg-epic-gray-light text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+                    
+                    {/* Campo de Senha */}
+                    <div>
+                        <label htmlFor="senha" className="block text-sm font-medium text-gray-300 mb-1">
+                            Senha
+                        </label>
+                        <input 
+                            type="password" 
+                            name="senha" 
+                            id="senha" 
+                            required
+                            className="w-full p-3 rounded bg-epic-gray-light text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+
+                    {/* Botão de Envio */}
+                    <div>
+                        <button 
+                            type="submit" 
+                            disabled={loading} // Desativa o botão durante o carregamento
+                            className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors disabled:bg-gray-500 disabled:cursor-not-allowed"
+                        >
+                            {loading ? 'Entrando...' : 'Entrar'}
+                        </button>
+                    </div>
+                </form>
+
+                {/* Link para a página de Cadastro */}
+                <div className="text-center text-gray-400">
+                    Não tem uma conta?{' '}
+                    <Link to="/cadastro" className="font-medium text-blue-500 hover:underline">
+                        Cadastre-se
+                    </Link>
+                </div>
+
+            </div>
+        </div>
+    );
 }
 
 export default Login;

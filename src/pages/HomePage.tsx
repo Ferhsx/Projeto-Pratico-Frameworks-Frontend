@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../api/api';
 import ProdutoCard from '../componentes/ProdutosLista/ProdutosCard';
 
@@ -35,6 +36,9 @@ export default function HomePage() {
   // Separa os produtos em destaque dos demais
   const produtosEmDestaque = produtos.filter(p => p.isFeatured);
   const produtosNormais = produtos.filter(p => !p.isFeatured);
+  
+  // Limita a 5 produtos em destaque na sidebar
+  const produtosDestaqueSidebar = produtosEmDestaque.slice(0, 5);
 
   // Pega o primeiro produto em destaque para ser o "Herói"
   const produtoHeroi = produtosEmDestaque.length > 0 ? produtosEmDestaque[0] : null;
@@ -46,7 +50,6 @@ export default function HomePage() {
   return (
     <div className="p-4 md:p-8">
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        
         {/* Coluna Principal (Hero + Grid de Produtos) */}
         <div className="lg:col-span-3 space-y-8">
           {/* Componente Hero */}
@@ -63,11 +66,12 @@ export default function HomePage() {
           </div>
         </div>
         
-        {/* Sidebar (Lista de Destaques) */}
-        <aside className="lg:col-span-1">
-          <SidebarDestaques produtos={produtosEmDestaque} />
+        {/* Sidebar (Lista de Destaques - Máximo 5 itens) */}
+        <aside className="lg:col-span-1 flex flex-col">
+          <div className="sticky top-4">
+            <SidebarDestaques produtos={produtosDestaqueSidebar} />
+          </div>
         </aside>
-
       </div>
     </div>
   );
@@ -75,14 +79,15 @@ export default function HomePage() {
 
 // Componente para o Banner Principal (Pode ficar no mesmo arquivo ou ser separado)
 function HeroBanner({ produto }: { produto: ProdutoType }) {
+  const navigate = useNavigate();
   return (
-    <div className="relative rounded-lg overflow-hidden h-96">
+    <div className="relative rounded-lg overflow-hidden h-[28rem]">
       <img src={produto.urlfoto} alt={produto.nome} className="w-full h-full object-cover" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
       <div className="absolute bottom-0 left-0 p-8 text-white">
         <h1 className="text-4xl font-bold mb-2">{produto.nome}</h1>
         <p className="text-lg mb-4 max-w-lg">{produto.descricao}</p>
-        <button className="bg-white text-black font-bold py-3 px-6 rounded hover:bg-gray-200 transition-colors">
+        <button onClick={() => navigate(`/produto/${produto._id}`)} className="bg-white text-black font-bold py-3 px-6 rounded hover:bg-gray-200 transition-colors">
           Saiba mais
         </button>
       </div>
@@ -92,13 +97,27 @@ function HeroBanner({ produto }: { produto: ProdutoType }) {
 
 // Componente para a Sidebar (Pode ficar no mesmo arquivo ou ser separado)
 function SidebarDestaques({ produtos }: { produtos: ProdutoType[] }) {
+  const navigate = useNavigate();
+
+  const handleProductClick = (id: string) => {
+    navigate(`/produto/${id}`);
+  };
+
   return (
-    <div className="bg-epic-gray-dark p-4 rounded-lg">
-      <h3 className="font-bold mb-4">Em Destaque</h3>
+    <div className="bg-epic-gray-dark p-4 rounded-lg h-full">
+      <h3 className="font-bold mb-4 text-xl">Em Destaque</h3>
       <div className="space-y-4">
         {produtos.map(produto => (
-          <div key={produto._id} className="flex items-center gap-4 p-2 rounded hover:bg-epic-gray-light cursor-pointer">
-            <img src={produto.urlfoto} alt={produto.nome} className="w-16 h-20 object-cover rounded" />
+          <div 
+            key={produto._id} 
+            className="flex items-center gap-4 p-2 rounded hover:bg-epic-gray-light cursor-pointer transition-colors"
+            onClick={() => handleProductClick(produto._id)}
+          >
+            <img 
+              src={produto.urlfoto} 
+              alt={produto.nome} 
+              className="w-16 h-16 object-cover rounded" 
+            />
             <div>
               <p className="font-semibold text-white">{produto.nome}</p>
               <p className="text-sm text-gray-400">R$ {produto.preco.toFixed(2)}</p>
@@ -108,5 +127,4 @@ function SidebarDestaques({ produtos }: { produtos: ProdutoType[] }) {
       </div>
     </div>
   );
-
 }
