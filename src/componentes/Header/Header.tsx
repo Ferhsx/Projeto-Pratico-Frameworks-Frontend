@@ -1,7 +1,6 @@
 import { useNavigate, Link } from 'react-router-dom';
 // Importa a função de logout que já existe
 import { handleLogout } from '../login/auth';
-import './Header.css';
 
 function Header() {
     const navigate = useNavigate();
@@ -56,9 +55,9 @@ function Header() {
                 {tipo === 'admin' && (
                     <Link 
                         to="/admin/dashboard"
-                        style={{ marginLeft: '20px', fontWeight: 'bold' }}
+                        className="text-gray-300 hover:text-gray-400"
                     >
-                        Painel Admin
+                        <span>Painel Admin</span>
                     </Link>
                 )}
 
@@ -68,7 +67,6 @@ function Header() {
                         className="cart-link"
                         title="Ver Carrinho"
                     >
-                        <span className="cart-icon">🛒</span>
                         <span className="cart-text">Carrinho</span>
                     </Link>
                 )}
