@@ -28,9 +28,6 @@ function Header() {
             </header>);
     }
 
-    // Se estiver logado, exibe as informações
-    const usuarioId = localStorage.getItem('usuarioId');
-
     return (
         <header className="bg-epic-gray-dark p-4 flex justify-between items-center border-b border-gray-700">
             {/* Lado Esquerdo */}
