@@ -49,22 +49,105 @@ function Cadastrar() {
     }
 
     return (
-        <>
-            <h1>Cadastro</h1>
-            {mensagemErro && <p style={{ color: 'red' }}>{mensagemErro}</p>}
-            <form onSubmit={handleSubmit}>
-                <input type="text" name="nome" placeholder="Nome" required />
-                <input type="number" name="idade" placeholder="Idade" required min={0} />
-                <input type="email" name="email" placeholder="Email" required />
-                <input type="password" name="senha" placeholder="Senha" required />
-                <select name="tipoUsuario" required>
-                    <option value="">Selecione o tipo de usuário</option>
-                    <option value="comum">Comum</option>
-                    <option value="admin">Admin</option>
-                </select>
-                <button type="submit" disabled={enviando}>{enviando ? 'Enviando...' : 'Cadastrar'}</button>
-            </form>
-        </>
+        <div className="flex items-center justify-center min-h-screen bg-gray-900 px-4">
+            <div className="w-full max-w-md p-8 space-y-8 bg-gray-800 rounded-lg shadow-lg">
+                
+                <h1 className="text-3xl font-bold text-center text-white">
+                    Criar Conta
+                </h1>
+                
+                {mensagemErro && (
+                    <div className="p-3 bg-red-800 border border-red-600 text-red-200 rounded-md text-center">
+                        {mensagemErro}
+                    </div>
+                )}
+                
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-1">
+                            Nome
+                        </label>
+                        <input 
+                            type="text" 
+                            name="nome" 
+                            placeholder="Seu nome" 
+                            required 
+                            className="w-full p-3 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+                    
+                    <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-1">
+                            Idade
+                        </label>
+                        <input 
+                            type="number" 
+                            name="idade" 
+                            placeholder="Sua idade" 
+                            required 
+                            min={0}
+                            className="w-full p-3 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+                    
+                    <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-1">
+                            Email
+                        </label>
+                        <input 
+                            type="email" 
+                            name="email" 
+                            placeholder="seu@email.com" 
+                            required 
+                            className="w-full p-3 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+                    
+                    <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-1">
+                            Senha
+                        </label>
+                        <input 
+                            type="password" 
+                            name="senha" 
+                            placeholder="Crie uma senha" 
+                            required 
+                            className="w-full p-3 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+                    
+                    <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-1">
+                            Tipo de Usuário
+                        </label>
+                        <select 
+                            name="tipoUsuario" 
+                            required
+                            className="w-full p-3 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                            <option value="">Selecione o tipo de usuário</option>
+                            <option value="comum">Comum</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    
+                    <button 
+                        type="submit" 
+                        disabled={enviando}
+                        className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors disabled:bg-gray-500 disabled:cursor-not-allowed"
+                    >
+                        {enviando ? 'Cadastrando...' : 'Cadastrar'}
+                    </button>
+                </form>
+                
+                <div className="text-center text-gray-400">
+                    Já tem uma conta?{' '}
+                    <a href="/login" className="font-medium text-blue-500 hover:underline">
+                        Faça login
+                    </a>
+                </div>
+            </div>
+        </div>
     );
 }
 

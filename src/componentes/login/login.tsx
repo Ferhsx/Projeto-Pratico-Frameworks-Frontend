@@ -40,8 +40,8 @@ function Login() {
     }
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-epic-dark px-4">
-            <div className="w-full max-w-md p-8 space-y-8 bg-epic-gray-dark rounded-lg shadow-lg">
+        <div className="flex items-center justify-center min-h-screen bg-gray-900 px-4">
+            <div className="w-full max-w-md p-8 space-y-8 bg-gray-800 rounded-lg shadow-lg">
                 
                 <h1 className="text-3xl font-bold text-center text-white">
                     Entrar na sua Conta
@@ -65,7 +65,7 @@ function Login() {
                             name="email" 
                             id="email" 
                             required
-                            className="w-full p-3 rounded bg-epic-gray-light text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full p-3 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
                     
@@ -79,7 +79,7 @@ function Login() {
                             name="senha" 
                             id="senha" 
                             required
-                            className="w-full p-3 rounded bg-epic-gray-light text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full p-3 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
 

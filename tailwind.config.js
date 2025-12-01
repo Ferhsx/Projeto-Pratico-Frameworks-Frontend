@@ -1,5 +1,6 @@
 
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -7,9 +8,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        'epic-dark': '#121212',
-        'epic-gray-light': '#2a2a2a',
-        'epic-gray-dark': '#202020',
+        'epic-dark': '#011F26',
+        'epic-gray-light': '#5C7373',
+        'epic-gray-dark': '#032612',
+        'epic-header': '#011F26',
+        'primary-blue': '#027368',
+        'accent-green': '#034001',
       }
     },
   },

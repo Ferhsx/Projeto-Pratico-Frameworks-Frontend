@@ -13,71 +13,88 @@ function Header() {
     // o header não exibe nada.
     if (!nome || !tipo) {
         return (
-            <header className="bg-epic-gray-dark p-4 flex justify-between items-center border-b border-gray-700">
-                <Link to="/" className="text-2xl font-bold text-white uppercase">
-                    Epico Gomes
-                </Link>
-                <div className="flex items-center gap-4">
-                    <Link to="/login" className="text-gray-300 hover:text-white">
-                        Login
+            <header className="bg-white dark:bg-gray-900 border-b-2 border-gray-300 dark:border-gray-700 shadow-md px-8 py-3">
+                <div className="max-w-7xl mx-auto flex justify-between items-center">
+                    <Link to="/" className="text-2xl font-black text-gray-900 dark:text-white uppercase tracking-widest hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+                        Epico Gomes
                     </Link>
-                    <Link to="/cadastro" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                        Cadastre-se
-                    </Link>
+                    <div className="flex items-center gap-6">
+                        <Link to="/login" className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white font-semibold transition-colors border-b-2 border-transparent hover:border-gray-900 dark:hover:border-gray-500">
+                            Login
+                        </Link>
+                        <Link to="/cadastro" className="bg-black dark:bg-white text-white dark:text-black px-6 py-2 rounded-md font-bold hover:bg-gray-800 dark:hover:bg-gray-200 transition-all transform hover:scale-105 shadow-md">
+                            Cadastre-se
+                        </Link>
+                    </div>
                 </div>
             </header>);
     }
 
     return (
-        <header className="bg-epic-gray-dark p-4 flex justify-between items-center border-b border-gray-700">
-            {/* Lado Esquerdo */}
-            <div className="flex items-center gap-8">
-                <Link to="/" className="text-2xl font-bold text-white uppercase">
-                    Epico Gomes
-                </Link>
-                <nav className="hidden md:flex gap-6">
-                    <a href="/" className="text-gray-300 hover:text-white">Loja</a>
-                    <a href="/distribuir" className="text-gray-300 hover:text-white">Distribuir</a>
-                </nav>
-            </div>
-
-            {/* Lado Direito */}
-            <div className="flex items-center gap-4">
-                {nome ? (
-                    <>
-                        <span className="text-gray-300">Olá, {nome}</span>
-                        <button
-                            onClick={() => handleLogout(navigate)}
-                            className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                        >
-                            Sair
-                        </button>
-                    </>
-                ) : (
-                    <button
-                        onClick={() => navigate('/login')}
-                        className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                        Entrar
-                    </button>
-                )}
-
-                {tipo === 'admin' && (
-                    <Link
-                        to="/admin/dashboard"
-                        className="text-gray-300 hover:text-gray-400"
-                    >
-                        <span>Painel Admin</span>
+        <header className="bg-white dark:bg-gray-900 border-b-2 border-gray-300 dark:border-gray-700 shadow-md px-8 py-3 sticky top-0 z-50">
+            <div className="max-w-7xl mx-auto flex justify-between items-center">
+                {/* Lado Esquerdo */}
+                <div className="flex items-center gap-12">
+                    <Link to="/" className="text-2xl font-black text-gray-900 dark:text-white uppercase tracking-widest hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+                        Epico Gomes
                     </Link>
-                )}
+                    <nav className="hidden md:flex gap-8">
+                        <a href="/" className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white font-semibold transition-colors border-b-2 border-transparent hover:border-gray-900 dark:hover:border-gray-500">
+                            Loja
+                        </a>
+                        <a href="/distribuir" className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white font-semibold transition-colors border-b-2 border-transparent hover:border-gray-900 dark:hover:border-gray-500">
+                            Distribuir
+                        </a>
+                    </nav>
+                </div>
 
-                <Link
-                    to="/carrinho"
-                    className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    title="Ver Carrinho"
-                >
-                    Carrinho
-                </Link>
+                {/* Lado Direito */}
+                <div className="flex items-center gap-6">
+                    {nome ? (
+                        <>
+                            <div className="hidden sm:flex items-center gap-2">
+                                <span className="text-purple-600 font-semibold">Olá,</span>
+                                <span className="text-purple-600 font-bold">{nome}</span>
+                            </div>
+                            <div className="w-px h-6 bg-gray-300 dark:bg-gray-600"></div>
+                            <button
+                                onClick={() => handleLogout(navigate)}
+                                className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-md transition-all transform hover:scale-105 shadow-md"
+                            >
+                                Sair
+                            </button>
+                        </>
+                    ) : (
+                        <button
+                            onClick={() => navigate('/login')}
+                            className="bg-black text-white font-bold py-2 px-4 rounded-md hover:bg-gray-800 transition-all transform hover:scale-105 shadow-md"
+                        >
+                            Entrar
+                        </button>
+                    )}
+
+                    {tipo === 'admin' && (
+                        <>
+                            <div className="w-px h-6 bg-gray-300 dark:bg-gray-600"></div>
+                            <Link
+                                to="/admin/dashboard"
+                                className="text-purple-600 hover:text-purple-500 transition-colors font-semibold px-3 py-2 rounded-md"
+                                title="Painel Admin"
+                            >
+                                <span>⚙️ Admin</span>
+                            </Link>
+                        </>
+                    )}
+
+                    <div className="w-px h-6 bg-gray-300"></div>
+                    <Link
+                        to="/carrinho"
+                        className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 font-semibold"
+                        title="Ver Carrinho"
+                    >
+                        🛒 Carrinho
+                    </Link>
+                </div>
             </div>
         </header>
     );

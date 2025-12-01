@@ -48,7 +48,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="p-4 md:p-8">
+    <div className="w-full">
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Coluna Principal (Hero + Grid de Produtos) */}
         <div className="lg:col-span-3 space-y-8">
@@ -56,20 +56,35 @@ export default function HomePage() {
           {produtoHeroi && <HeroBanner produto={produtoHeroi} />}
           
           {/* Grid de Produtos Normais */}
-          <div>
-            <h2 className="text-2xl font-bold mb-4">Mais Jogos</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-              {produtosNormais.map(produto => (
-                <ProdutoCard key={produto._id} produto={produto} />
-              ))}
+          <section>
+            <div className="mb-8">
+              <h2 className="poster-title text-4xl font-black text-gray-900 mb-2">Catálogo</h2>
+              <div className="h-1 w-16 bg-black rounded-full"></div>
             </div>
-          </div>
+            {produtosNormais.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                {produtosNormais.map(produto => (
+                  <ProdutoCard key={produto._id} produto={produto} />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-16 bg-gray-100 rounded-xl border-2 border-dashed border-gray-300">
+                <p className="text-gray-600 text-lg font-semibold">Nenhum produto disponível</p>
+              </div>
+            )}
+          </section>
         </div>
         
         {/* Sidebar (Lista de Destaques - Máximo 5 itens) */}
-        <aside className="lg:col-span-1 flex flex-col">
-          <div className="sticky top-4">
-            <SidebarDestaques produtos={produtosDestaqueSidebar} />
+        <aside className="lg:col-span-1">
+          <div className="sticky top-24">
+            {produtosDestaqueSidebar.length > 0 ? (
+              <SidebarDestaques produtos={produtosDestaqueSidebar} />
+            ) : (
+              <div className="bg-white rounded-lg shadow-sm p-6 text-center">
+                <p className="text-gray-500">Nenhum produto em destaque</p>
+              </div>
+            )}
           </div>
         </aside>
       </div>
@@ -77,25 +92,33 @@ export default function HomePage() {
   );
 }
 
-// Componente para o Banner Principal (Pode ficar no mesmo arquivo ou ser separado)
+// Componente para o Banner Principal
 function HeroBanner({ produto }: { produto: ProdutoType }) {
   const navigate = useNavigate();
+  
   return (
-    <div className="relative rounded-lg overflow-hidden h-[28rem]">
-      <img src={produto.urlfoto} alt={produto.nome} className="w-full h-full object-cover" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-      <div className="absolute bottom-0 left-0 p-8 text-white">
-        <h1 className="text-4xl font-bold mb-2">{produto.nome}</h1>
-        <p className="text-lg mb-4 max-w-lg">{produto.descricao}</p>
-        <button onClick={() => navigate(`/produto/${produto._id}`)} className="bg-white text-black font-bold py-3 px-6 rounded hover:bg-gray-200 transition-colors">
-          Saiba mais
+    <div className="relative rounded-2xl overflow-hidden h-96 shadow-2xl group hero">
+      <img 
+        src={produto.urlfoto} 
+        alt={produto.nome} 
+        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent"></div>
+      <div className="absolute bottom-0 left-0 right-0 p-8 flex flex-col gap-3">
+        <span className="inline-block bg-white text-gray-900 text-xs font-bold px-3 py-1 rounded-full w-fit poster-subtitle">DESTAQUE</span>
+        <button 
+          onClick={() => navigate(`/produto/${produto._id}`)} 
+          className="bg-white text-gray-900 font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition-all transform hover:scale-105 shadow-lg inline-flex items-center gap-2 w-fit"
+        >
+          Ver Detalhes
+          <span>→</span>
         </button>
       </div>
     </div>
   );
 }
 
-// Componente para a Sidebar (Pode ficar no mesmo arquivo ou ser separado)
+// Componente para a Sidebar
 function SidebarDestaques({ produtos }: { produtos: ProdutoType[] }) {
   const navigate = useNavigate();
 
@@ -104,23 +127,28 @@ function SidebarDestaques({ produtos }: { produtos: ProdutoType[] }) {
   };
 
   return (
-    <div className="bg-epic-gray-dark p-4 rounded-lg h-full">
-      <h3 className="font-bold mb-4 text-xl">Em Destaque</h3>
-      <div className="space-y-4">
-        {produtos.map(produto => (
+    <div className="bg-white rounded-2xl shadow-lg border border-epic-gray-light overflow-hidden">
+      <div className="bg-gradient-to-r from-epic-dark to-epic-gray-dark px-6 py-5 border-b border-epic-gray-light">
+        <h3 className="font-black text-lg text-white">⭐ Em Destaque</h3>
+      </div>
+      <div className="divide-y divide-gray-200">
+        {produtos.map((produto, index) => (
           <div 
             key={produto._id} 
-            className="flex items-center gap-4 p-2 rounded hover:bg-epic-gray-light cursor-pointer transition-colors"
+            className="flex items-center gap-4 p-4 hover:bg-gray-50 cursor-pointer transition-colors group"
             onClick={() => handleProductClick(produto._id)}
           >
+            <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary-blue text-white flex items-center justify-center text-xs font-bold">
+              {index + 1}
+            </div>
             <img 
               src={produto.urlfoto} 
               alt={produto.nome} 
-              className="w-16 h-16 object-cover rounded" 
+              className="w-20 h-20 object-cover rounded-lg flex-shrink-0 group-hover:scale-110 transition-transform" 
             />
-            <div>
-              <p className="font-semibold text-white">{produto.nome}</p>
-              <p className="text-sm text-gray-400">R$ {produto.preco.toFixed(2)}</p>
+            <div className="flex-1 min-w-0">
+              <p className="font-bold text-gray-900 text-sm truncate">{produto.nome}</p>
+              <p className="text-sm text-accent-green font-bold mt-1">R$ {produto.preco.toFixed(2)}</p>
             </div>
           </div>
         ))}

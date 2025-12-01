@@ -1,11 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800;900&display=swap');
+
 @import "tailwindcss";
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgba(255, 255, 255, 0.95);
   background-color: #242424;
 
   font-synthesis: none;
@@ -14,27 +17,251 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Estilos globais para melhor legibilidade */
+body, body * {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+
+
+/* Estilos para tema claro */
+:root.light {
+  color-scheme: light;
+  color: #5a1a2a;
+  background-color: #ffffff;
+}
+
+:root.light a {
+  color: #8b1838;
+}
+
+:root.light a:hover {
+  color: #6a0f2a;
+}
+
+:root.light button {
+  background-color: #f5e6e8;
+  color: #5a1a2a;
+  border-color: #d4a5b0;
+}
+
+:root.light button:hover {
+  background-color: #e8d0d6;
+  border-color: #8b1838;
+}
+
+:root.light input,
+:root.light textarea,
+:root.light select {
+  background-color: #ffffff;
+  color: #5a1a2a;
+  border-color: #d4a5b0;
+}
+
+:root.light input:focus,
+:root.light textarea:focus,
+:root.light select:focus {
+  border-color: #8b1838;
+  background-color: #ffffff;
+  color: #5a1a2a;
+}
+
+:root.light h1,
+:root.light h2,
+:root.light h3,
+:root.light h4,
+:root.light h5,
+:root.light h6,
+:root.light p,
+:root.light span,
+:root.light div,
+:root.light label {
+  color: #5a1a2a;
+}
+
+/* Estilos para tema escuro */
+:root.dark {
+  color: rgba(255, 255, 255, 0.95);
+  background-color: #1a1a1a;
+}
+
+:root.dark a {
+  color: #64b5f6;
+}
+
+:root.dark a:hover {
+  color: #90caf9;
+}
+
+:root.dark button {
+  background-color: #2a2a2a;
+  color: rgba(255, 255, 255, 0.95);
+  border-color: #555;
+}
+
+:root.dark button:hover {
+  background-color: #333333;
+  border-color: #64b5f6;
+}
+
+:root.dark input,
+:root.dark textarea,
+:root.dark select {
+  background-color: #2a2a2a;
+  color: rgba(255, 255, 255, 0.95);
+  border-color: #555;
+}
+
+:root.dark input:focus,
+:root.dark textarea:focus,
+:root.dark select:focus {
+  border-color: #64b5f6;
+  background-color: #2a2a2a;
+  color: rgba(255, 255, 255, 0.95);
+}
+
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #8b1838;
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: #6a0f2a;
+}
+
+:root.dark a {
+  color: #ff9eb2;
+}
+
+:root.dark a:hover {
+  color: #ffb8cc;
 }
 
 body {
   margin: 0;
+  padding: 0;
   display: flex;
-  place-items: center;
+  flex-direction: column;
   min-width: 320px;
   min-height: 100vh;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+  letter-spacing: 0.3px;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+:root.light body {
+  background: linear-gradient(135deg, #ffffff 0%, #f5e6e8 50%, #f0d4d8 100%);
+  color: #5a1a2a;
+  position: relative;
+}
+
+:root.dark body {
+  background: linear-gradient(135deg, #1a0f12 0%, #2d1620 50%, #2a1428 100%);
+  color: #f5d5dd;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(176, 37, 65, 0.25) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(139, 24, 56, 0.25) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(176, 37, 65, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+:root.dark body::before {
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(176, 37, 65, 0.35) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(176, 37, 65, 0.35) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(176, 37, 65, 0.15) 0%, transparent 50%);
 }
 
 h1 {
+  font-family: 'Playfair Display', serif;
   font-size: 3.2em;
   line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin: 0;
+  color: inherit;
 }
+
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: inherit;
+}
+
+h3 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  color: inherit;
+}
+
+h4 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+  color: inherit;
+}
+
+h5, h6 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: inherit;
+}
+
+p {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  line-height: 1.8;
+  color: inherit;
+}
+
+/* ===== TIPOGRAFIA DOS CARTAZES (TÍTULOS/DESTAQUES) ===== */
+.poster-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 800;
+  letter-spacing: -0.6px;
+  line-height: 1.05;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.poster-subtitle {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  line-height: 1.15;
+}
+
+/* Forçar títulos de hero a ficarem legíveis sobre imagens */
+.hero .poster-title,
+.relative .poster-title {
+  color: #ffffff !important;
+  text-shadow: 0 6px 20px rgba(0,0,0,0.6);
+}
+
+/* Seção e cartões (quando houver cor de fundo claro) */
+section .poster-title,
+.bg-white .poster-title,
+.rounded-xl .poster-title {
+  color: #8b1838; /* vinho */
+}
+
 
 button {
   border-radius: 8px;
@@ -45,7 +272,7 @@ button {
   font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 button:hover {
   border-color: #646cff;
@@ -55,9 +282,56 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+input,
+textarea,
+select {
+  font-family: inherit;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Melhoria de legibilidade em flexbox e containers */
+div, section, header, footer, article, aside, main, nav {
+  color: inherit;
+}
+
+span, p, label {
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  color: inherit;
+}
+
+/* Melhoria de contraste para textos em fundos */
+:root.dark div, 
+:root.dark section, 
+:root.dark header, 
+:root.dark footer,
+:root.dark article,
+:root.dark aside,
+:root.dark main,
+:root.dark nav,
+:root.dark p,
+:root.dark span,
+:root.dark label {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+:root.light div, 
+:root.light section, 
+:root.light header, 
+:root.light footer,
+:root.light article,
+:root.light aside,
+:root.light main,
+:root.light nav,
+:root.light p,
+:root.light span,
+:root.light label {
+  color: #1a1a1a;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
+    color: #333333;
     background-color: #ffffff;
   }
   a:hover {
@@ -65,5 +339,444 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+    color: #333333;
+  }
+  input,
+  textarea,
+  select {
+    background-color: #ffffff;
+    color: #333333;
+  }
+  h1, h2, h3, h4, h5, h6, p, span, div, label {
+    color: #333333;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
+  }
+  a:hover {
+    color: #535bf2;
+  }
+  button {
+    background-color: #1a1a1a;
+    color: rgba(255, 255, 255, 0.87);
+  }
+  input,
+  textarea,
+  select {
+    background-color: #1a1a1a;
+    color: rgba(255, 255, 255, 0.87);
+  }
+}
+
+/* Transição suave ao mudar de tema */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Shadow box para cards e blocos de jogos */
+.shadow-sm, .shadow, .shadow-md, .shadow-lg, .shadow-xl {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+:root.light .shadow-sm, 
+:root.light .shadow, 
+:root.light .shadow-md, 
+:root.light .shadow-lg, 
+:root.light .shadow-xl {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+:root.dark .shadow-sm, 
+:root.dark .shadow, 
+:root.dark .shadow-md, 
+:root.dark .shadow-lg, 
+:root.dark .shadow-xl {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Blocos de produtos/jogos com shadow */
+.rounded-lg, .rounded {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+:root.light .rounded-lg, 
+:root.light .rounded {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+:root.dark .rounded-lg, 
+:root.dark .rounded {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Cards de produtos adaptáveis ao tema */
+:root.light .bg-epic-gray-dark {
+  background-color: #2a2a2a;
+}
+
+:root.light .bg-epic-gray-light {
+  background-color: #e0e0e0;
+}
+
+:root.dark .bg-epic-gray-dark {
+  background-color: #202020;
+}
+
+:root.dark .bg-epic-gray-light {
+  background-color: #2a2a2a;
+}
+
+/* Estilo da Navegação */
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  padding: 0.75rem 1.25rem;
+  display: block;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  font-weight: 500;
+}
+
+nav ul li a:hover {
+  background: var(--primary-hover);
+}
+
+/* ===== CONTEÚDO PRINCIPAL ===== */
+main {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  flex: 1;
+}
+
+section {
+  padding: 40px 20px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+section h3 {
+  color: var(--text-primary);
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+section h4 {
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  margin-bottom: 15px;
+}
+
+section p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* ===== SEÇÃO HERO ===== */
+.hero {
+  background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+  color: var(--text-primary);
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.hero h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: var(--text-primary);
+}
+
+.hero p {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  color: var(--text-secondary);
+}
+
+/* ===== BOTÃO CTA ===== */
+.btn-cta {
+  display: inline-block;
+  background: var(--accent-color);
+  color: white;
+  padding: 12px 30px;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 15px;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-cta:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== SERVIÇOS ===== */
+.servico {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 25px;
+  margin: 15px auto;
+  max-width: 500px;
+  transition: all 0.3s ease;
+}
+
+.servico:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-color: var(--accent-color);
+}
+
+/* ===== FORMULÁRIO DE CONTATO ===== */
+#contato form {
+  max-width: 600px;
+  margin: 20px auto;
+  text-align: left;
+  padding: 25px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+}
+
+#contato label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+#contato input[type="text"],
+#contato input[type="email"],
+#contato textarea {
+  display: block;
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+#contato input[type="text"]:focus,
+#contato input[type="email"]:focus,
+#contato textarea:focus {
+  outline: none;
+  border-color: var(--info-color);
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+#contato textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+#contato button {
+  background: var(--info-color);
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-size: 1rem;
+  width: 100%;
+}
+
+#contato button:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* ===== RODAPÉ ===== */
+footer {
+  background: var(--primary-color);
+  color: white;
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-top: auto;
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+footer p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.social-links {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.social-links a {
+  color: white;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.social-links a:hover {
+  opacity: 0.7;
+}
+
+/* ===== TRANSIÇÕES E ANIMAÇÕES ===== */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  header h1 {
+    font-size: 1.25rem;
+  }
+
+  nav ul {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  nav ul li {
+    text-align: center;
+  }
+
+  nav ul li a {
+    padding: 0.5rem 1rem;
+  }
+
+  main {
+    padding: 15px;
+  }
+
+  section {
+    padding: 30px 15px;
+  }
+
+  .hero h2 {
+    font-size: 1.8rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  #contato form {
+    padding: 20px;
+  }
+
+  .servico {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1rem;
+  }
+
+  nav ul li a {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .hero h2 {
+    font-size: 1.5rem;
+  }
+
+  .hero p {
+    font-size: 0.9rem;
+  }
+
+  section h3 {
+    font-size: 1.5rem;
+  }
+
+  .btn-cta {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+
+  #contato button {
+    padding: 10px 15px;
+  }
+}
+
+/* ===== SUPORTE THEME BRANCO ===== */
+:root.light header {
+  background: var(--primary-color);
+  border-bottom-color: rgba(0, 0, 0, 0.15);
+}
+
+:root.light nav ul li a:hover {
+  background: var(--primary-hover);
+}
+
+:root.light footer {
+  background: var(--primary-color);
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+:root.light section {
+  background: var(--bg-secondary);
+}
+
+:root.light .servico {
+  background: var(--bg-primary);
+  border-color: var(--border-color);
+}
+
+:root.light .servico:hover {
+  border-color: var(--accent-color);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+:root.light #contato form {
+  background: var(--bg-primary);
+  border-color: var(--border-color);
+}
+
+:root.light #contato input[type="text"],
+:root.light #contato input[type="email"],
+:root.light #contato textarea {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+:root.light #contato input[type="text"]:focus,
+:root.light #contato input[type="email"]:focus,
+:root.light #contato textarea:focus {
+  border-color: var(--info-color);
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
