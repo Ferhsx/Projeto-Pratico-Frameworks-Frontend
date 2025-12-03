@@ -10,6 +10,7 @@ import ListarCarrinhos from './componentes/admin/listarCarrinhos'
 import DashboardAdmin from './componentes/admin/drashAdmin'
 import ProdutosLista from './pages/GerenciadorProdutos'
 import HomePage from './pages/HomePage';
+import FinalizarCompra from './pages/FinalizarCompra'
 import { useEffect } from 'react'
 import DetalheProdutoPage from './componentes/ProdutosLista/Produto'
 
@@ -55,6 +56,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/cadastro" element={<Cadastrar />} />
             <Route path="/carrinho" element={<Carrinho />} />
+            <Route path="/finalizar-compra" element={<FinalizarCompra />} />
 
             
             {/* Rota protegida para área secreta */}

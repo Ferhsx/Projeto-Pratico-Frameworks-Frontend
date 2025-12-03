@@ -23,9 +23,9 @@ export default function ProdutoCard({ produto }: { produto: Produto }) {
 
                 {/* Informações */}
                 <div className="p-4 flex flex-col gap-3">
-                    <h3 className="poster-subtitle text-gray-900 font-bold text-base truncate group-hover:text-black">{produto.nome}</h3>
+                    <h3 className="poster-subtitle font-bold text-base truncate" style={{ color: '#800020' }}>{produto.nome}</h3>
                     <div className="flex items-baseline justify-between">
-                        <p className="text-green-600 font-bold text-lg">R$ {produto.preco.toFixed(2)}</p>
+                        <p className="font-bold text-lg" style={{ color: '#800020' }}>R$ {produto.preco.toFixed(2)}</p>
                         <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">Ver +</span>
                     </div>
                 </div>

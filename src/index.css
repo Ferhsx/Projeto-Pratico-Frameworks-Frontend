@@ -15,8 +15,18 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Paleta vinho (variáveis usadas no tema) */
+  --wine-700: #800020;
+  --wine-500: #b33b4e;
+  --wine-300: #fdeef0;
+  --wine-100: #fff5f6;
+  --primary-hover: #0056b3;
+  --text-secondary: #b0b8c1;
+  --accent-hover: #00b8d4;
+  --accent-color: #00d4ff;
+  --border-color: #404854;
+  --info-color: #007bff;
 }
-
 /* Estilos globais para melhor legibilidade */
 body, body * {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -40,7 +50,7 @@ body, body * {
 }
 
 :root.light button {
-  background-color: #f5e6e8;
+  background-color: var(--wine-300);
   color: #5a1a2a;
   border-color: #d4a5b0;
 }
@@ -89,6 +99,10 @@ body, body * {
   color: #64b5f6;
 }
 
+:root.dark a {
+  color: #64b5f6;
+}
+
 :root.dark a:hover {
   color: #90caf9;
 }
@@ -100,7 +114,7 @@ body, body * {
 }
 
 :root.dark button:hover {
-  background-color: #333333;
+  background-color: #df6161;
   border-color: #64b5f6;
 }
 
@@ -118,23 +132,19 @@ body, body * {
   border-color: #64b5f6;
   background-color: #2a2a2a;
   color: rgba(255, 255, 255, 0.95);
-}
-
-a {
-  font-weight: 500;
-  color: #8b1838;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #6a0f2a;
 }
 
 :root.dark a {
-  color: #ff9eb2;
+  color: var(--text-secondary);
 }
 
 :root.dark a:hover {
-  color: #ffb8cc;
+  color: var(--accent-hover);
 }
 
 body {
@@ -154,7 +164,7 @@ body {
 }
 
 :root.light body {
-  background: linear-gradient(135deg, #ffffff 0%, #f5e6e8 50%, #f0d4d8 100%);
+  background: linear-gradient(135deg, var(--wine-100) 0%, var(--wine-300) 50%, var(--wine-300) 100%);
   color: #5a1a2a;
   position: relative;
 }
@@ -312,7 +322,7 @@ span, p, label {
 :root.dark p,
 :root.dark span,
 :root.dark label {
-  color: rgba(255, 255, 255, 0.95);
+  color: var(--text-primary);
 }
 
 :root.light div, 
@@ -331,45 +341,45 @@ span, p, label {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #333333;
-    background-color: #ffffff;
+    color: #3b0009;
+    background-color: var(--wine-100);
   }
   a:hover {
-    color: #747bff;
+    color: var(--primary-hover);
   }
   button {
-    background-color: #f9f9f9;
-    color: #333333;
+    background-color: var(--wine-700);
+    color: #3b0009;
   }
   input,
   textarea,
   select {
-    background-color: #ffffff;
-    color: #333333;
+    background-color: var(--wine-300);
+    color: #3b0009;
   }
   h1, h2, h3, h4, h5, h6, p, span, div, label {
-    color: #333333;
+    color: #3b0009;
   }
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    color: rgba(255, 255, 255, 0.87);
+  :root.dark {
+    color: var(--text-primary);
     background-color: #242424;
   }
-  a:hover {
-    color: #535bf2;
-  }
-  button {
-    background-color: #1a1a1a;
-    color: rgba(255, 255, 255, 0.87);
-  }
-  input,
-  textarea,
-  select {
-    background-color: #1a1a1a;
-    color: rgba(255, 255, 255, 0.87);
-  }
+    a:hover {
+      color: var(--primary-hover);
+    }
+    button {
+      background-color: #1a1a1a;
+      color: var(--text-primary);
+    }
+    input,
+    textarea,
+    select {
+      background-color: #1a1a1a;
+      color: var(--text-primary);
+    }
 }
 
 /* Transição suave ao mudar de tema */
@@ -438,7 +448,7 @@ nav ul {
 }
 
 nav ul li a {
-  color: white;
+  color: var(--text-primary);
   text-decoration: none;
   padding: 0.75rem 1.25rem;
   display: block;
@@ -512,7 +522,7 @@ section p {
 .btn-cta {
   display: inline-block;
   background: var(--accent-color);
-  color: white;
+  color: var(--text-primary);
   padding: 12px 30px;
   text-decoration: none;
   border-radius: 5px;
@@ -615,11 +625,11 @@ section p {
 /* ===== RODAPÉ ===== */
 footer {
   background: var(--primary-color);
-  color: white;
+  color: var(--text-primary);
   text-align: center;
   padding: 2rem 1rem;
   margin-top: auto;
-  border-top: 2px solid rgba(255, 255, 255, 0.1);
+  border-top: 2px solid rgba(253, 238, 240, 0.08);
 }
 
 footer p {
@@ -635,7 +645,7 @@ footer p {
 }
 
 .social-links a {
-  color: white;
+  color: var(--text-primary);
   text-decoration: none;
   transition: opacity 0.3s ease;
 }
@@ -743,7 +753,7 @@ footer p {
 
 :root.light footer {
   background: var(--primary-color);
-  border-top-color: rgba(255, 255, 255, 0.1);
+  border-top-color: rgba(253, 238, 240, 0.08);
 }
 
 :root.light section {

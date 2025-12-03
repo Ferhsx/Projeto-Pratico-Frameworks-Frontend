@@ -116,15 +116,15 @@ export default function DetalheProdutoPage() {
 
                 {/* Coluna da Direita: Informações e Ações */}
                 <div className="flex flex-col">
-                    <h1 className="text-4xl lg:text-5xl font-bold text-white leading-tight">
+                    <h1 className="text-4xl lg:text-5xl font-bold leading-tight" style={{ color: '#001f3f' }}>
                         {produto.nome}
                     </h1>
-                    <p className="text-gray-300 text-lg mt-4">
+                    <p className="text-lg mt-4" style={{ color: '#001f3f' }}>
                         {produto.descricao}
                     </p>
 
                     <div className="mt-8">
-                        <span className="text-5xl font-extrabold text-white">
+                        <span className="text-5xl font-extrabold" style={{ color: '#001f3f' }}>
                             R$ {produto.preco.toFixed(2)}
                         </span>
                     </div>
