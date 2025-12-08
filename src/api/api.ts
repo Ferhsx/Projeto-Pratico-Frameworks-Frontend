@@ -1,10 +1,38 @@
-import axios from 'axios'
+import axios from 'axios';
+import type { AxiosRequestConfig } from 'axios';
 
-console.log('URL da API:', import.meta.env.VITE_API_URL)
-const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,
-    timeout: 5000 // 5 segundos de timeout
-})
+// Forçar HTTPS em produção
+const isProduction = import.meta.env.PROD;
+let apiUrl = import.meta.env.VITE_API_URL || '';
+
+// Se estiver em produção e a URL não começar com https, substitua http por https
+if (isProduction && apiUrl.startsWith('http://')) {
+  apiUrl = apiUrl.replace('http://', 'https://');
+}
+
+console.log('URL da API:', apiUrl);
+
+// Configuração do axios com opções de segurança
+const axiosConfig: AxiosRequestConfig = {
+  baseURL: apiUrl,
+  timeout: 10000, // Aumentado para 10 segundos
+  withCredentials: true, // Importante para enviar cookies de autenticação
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest'
+  }
+};
+
+// Se estiver em desenvolvimento e usando HTTPS autoassinado, desabilite a verificação SSL
+if (!isProduction && apiUrl.startsWith('https://')) {
+  axiosConfig.httpsAgent = new (require('https').Agent)({  
+    rejectUnauthorized: false // Apenas para desenvolvimento com certificados autoassinados
+  });
+}
+
+const api = axios.create(axiosConfig);
+
 //Nós vamos criar um middleware para adicionar o token na requisição
 
 api.interceptors.request.use((config) => {

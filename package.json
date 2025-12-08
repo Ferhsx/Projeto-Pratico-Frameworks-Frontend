@@ -13,7 +13,6 @@
     "@stripe/react-stripe-js": "^5.4.1",
     "@stripe/stripe-js": "^8.5.3",
     "@tailwindcss/vite": "^4.1.16",
-    "@types/node": "^24.4.0",
     "@types/react-toastify": "^4.0.2",
     "axios": "^1.12.2",
     "dotenv": "^17.2.2",
@@ -22,10 +21,12 @@
     "react-router-dom": "^7.9.4",
     "react-toastify": "^11.0.5",
     "stripe": "^20.0.0",
-    "tailwindcss": "^4.1.16"
+    "tailwindcss": "^4.1.16",
+    "terser": "^5.44.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
+    "@types/node": "^24.10.1",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react-swc": "^4.0.0",
