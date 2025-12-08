@@ -170,8 +170,18 @@ export default function Carrinho() {
               </button>
 
               <button
-                className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600"
-                onClick={() => alert('Finalizar compra não implementado')}
+                className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 disabled:opacity-50"
+                onClick={() => {
+                  // Pass both the amount and cart items to the checkout page
+                  navigate('/finalizar-compra', {
+                    state: {
+                      cartItems: carrinho.itens,
+                      total: carrinho.total,
+                      amount: Math.round(carrinho.total * 100)
+                    }
+                  });
+                }}
+                disabled={carrinho.itens.length === 0}
               >
                 Finalizar Compra
               </button>

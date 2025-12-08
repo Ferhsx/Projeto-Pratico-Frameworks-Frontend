@@ -2,11 +2,23 @@ import React, { createContext, useContext, useEffect } from 'react';
 
 interface ThemeContextType {
   theme: 'light' | 'dark';
+  toggleTheme: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
+
+  const toggleTheme = () => {
+    setTheme(prevTheme => {
+      const newTheme = prevTheme === 'light' ? 'dark' : 'light';
+      // Save to localStorage for persistence
+      localStorage.setItem('theme', newTheme);
+      return newTheme;
+    });
+  };
+
   useEffect(() => {
     // Detecta a preferência do navegador
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -23,7 +35,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     };
 
     // Aplica o tema inicial
-    applyTheme(mediaQuery.matches);
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
+    const initialTheme = savedTheme || (mediaQuery.matches ? 'dark' : 'light');
+    setTheme(initialTheme);
+    applyTheme(initialTheme === 'dark');
 
     // Escuta mudanças no tema do navegador/sistema
     const handleChange = (e: MediaQueryListEvent) => {
@@ -37,10 +52,20 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
-  const theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  // Update theme class when theme changes
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+      root.style.colorScheme = 'dark';
+    } else {
+      root.classList.remove('dark');
+      root.style.colorScheme = 'light';
+    }
+  }, [theme]);
 
   return (
-    <ThemeContext.Provider value={{ theme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );
