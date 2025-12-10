@@ -7,23 +7,20 @@ function Header() {
     const [nome, setNome] = useState<string | null>(null);
     const [tipo, setTipo] = useState<string | null>(null);
 
-    // 🔧 Usar useEffect para sincronizar com localStorage
     useEffect(() => {
-        // Lê os dados do localStorage
-        const nomeArmazenado = localStorage.getItem("nomeUsuario");
-        const tipoArmazenado = localStorage.getItem("tipoUsuario");
-        
-        setNome(nomeArmazenado);
-        setTipo(tipoArmazenado);
-
-        // Ouve mudanças no localStorage (quando outro tab muda)
-        const handleStorageChange = () => {
+        // Função para ler dados do localStorage
+        const lerDados = () => {
             setNome(localStorage.getItem("nomeUsuario"));
             setTipo(localStorage.getItem("tipoUsuario"));
         };
 
-        window.addEventListener('storage', handleStorageChange);
-        return () => window.removeEventListener('storage', handleStorageChange);
+        // Lê na montagem inicial
+        lerDados();
+
+        // Ouve o evento (tanto o nativo de outras abas quanto o nosso customizado)
+        window.addEventListener('storage', lerDados);
+        
+        return () => window.removeEventListener('storage', lerDados);
     }, []);
 
     // Se o usuário não estiver logado

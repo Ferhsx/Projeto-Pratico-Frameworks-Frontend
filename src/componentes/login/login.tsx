@@ -1,18 +1,18 @@
 // Local: src/componentes/login/login.tsx
 
-import { useNavigate, Link } from "react-router-dom"; // Importe o Link
+import { useNavigate, Link } from "react-router-dom";
 import api from "../../api/api";
 import { useState } from "react";
 
 function Login() {
     const navigate = useNavigate();
     const [mensagemErro, setMensagemErro] = useState<string | null>(null);
-    const [loading, setLoading] = useState(false); // Bônus: Estado de carregamento
+    const [loading, setLoading] = useState(false);
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         setMensagemErro(null);
-        setLoading(true); // Ativa o estado de carregamento
+        setLoading(true);
 
         const formData = new FormData(event.currentTarget);
         const email = formData.get("email");
@@ -26,6 +26,11 @@ function Login() {
                 localStorage.setItem("token", resposta.data.token);
                 localStorage.setItem("nomeUsuario", resposta.data.nome);
                 localStorage.setItem("usuarioId", resposta.data.usuarioId);
+                localStorage.setItem("tipoUsuario", resposta.data.tipoUsuario); // ✅ Salvar tipo
+
+                // 🚨 Avisar o Header que algo mudou
+                window.dispatchEvent(new Event("storage"));
+
                 navigate("/");
             } else {
                 setMensagemErro("Resposta inválida do servidor.");
@@ -34,7 +39,7 @@ function Login() {
             const msg = error?.response?.data?.mensagem || error?.message || "Erro Desconhecido!";
             setMensagemErro(msg);
         }).finally(() => {
-            setLoading(false); // Desativa o estado de carregamento, não importa o resultado
+            setLoading(false);
         });
     }
 
@@ -46,7 +51,6 @@ function Login() {
                     Entrar na sua Conta
                 </h1>
                 
-                {/* Exibição da mensagem de erro */}
                 {mensagemErro && (
                     <div className="p-3 bg-red-800 border border-red-600 text-red-200 rounded-md text-center">
                         {mensagemErro}
@@ -54,7 +58,6 @@ function Login() {
                 )} 
                 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* Campo de Email */}
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
                             Endereço de Email
@@ -68,7 +71,6 @@ function Login() {
                         />
                     </div>
                     
-                    {/* Campo de Senha */}
                     <div>
                         <label htmlFor="senha" className="block text-sm font-medium text-gray-300 mb-1">
                             Senha
@@ -82,11 +84,10 @@ function Login() {
                         />
                     </div>
 
-                    {/* Botão de Envio */}
                     <div>
                         <button 
                             type="submit" 
-                            disabled={loading} // Desativa o botão durante o carregamento
+                            disabled={loading}
                             className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors disabled:bg-gray-500 disabled:cursor-not-allowed"
                         >
                             {loading ? 'Entrando...' : 'Entrar'}
@@ -94,7 +95,6 @@ function Login() {
                     </div>
                 </form>
 
-                {/* Link para a página de Cadastro */}
                 <div className="text-center text-gray-400">
                     Não tem uma conta?{' '}
                     <Link to="/cadastro" className="font-medium text-blue-500 hover:underline">
