@@ -19,8 +19,7 @@ const axiosConfig: AxiosRequestConfig = {
   withCredentials: true, // Importante para enviar cookies de autenticação
   headers: {
     'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    'X-Requested-With': 'XMLHttpRequest'
+    'Accept': 'application/json'
   }
 };
 
