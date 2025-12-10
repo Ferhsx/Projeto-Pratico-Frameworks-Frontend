@@ -43,7 +43,7 @@ export default function FinalizarCompra() {
   const stripe = useStripe()
   const elements = useElements()
   const [searchParams] = useSearchParams()
-  const [clientSecret, setClientSecret] = useState<string | null>(null)
+  const [clientSecret] = useState<string | null>(null)
   const [processing, setProcessing] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [paymentStatus, setPaymentStatus] = useState<'idle' | 'processing' | 'succeeded' | 'failed'>('idle')
