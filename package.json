@@ -17,9 +17,11 @@
     "axios": "^1.12.2",
     "dotenv": "^17.2.2",
     "react": "^19.1.1",
+    "react-confetti": "^6.4.0",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.4",
     "react-toastify": "^11.0.5",
+    "react-use": "^17.6.0",
     "stripe": "^20.0.0",
     "tailwindcss": "^4.1.16"
   },

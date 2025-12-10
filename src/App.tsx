@@ -1,5 +1,5 @@
 import './App.css'
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom' 
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Header from './componentes/Header/Header'
 import Login from './componentes/login/login'
 import Cadastrar from './componentes/login/cadastro'
@@ -13,12 +13,13 @@ import HomePage from './pages/HomePage';
 import FinalizarCompra from './pages/FinalizarCompra'
 import { useEffect } from 'react'
 import DetalheProdutoPage from './componentes/ProdutosLista/Produto'
+import PedidoConcluido from './pages/PedidoConcluido';
 
 
 // Componente para redirecionar com mensagem de erro
 function ErrorRedirect({ message }: { message: string }) {
   const location = useLocation();
-  
+
   useEffect(() => {
     // Se não estiver autenticado, redireciona para login com a mensagem de erro
     if (!localStorage.getItem('token')) {
@@ -33,15 +34,15 @@ function ErrorRedirect({ message }: { message: string }) {
 function ProtectedRoute({ children, adminOnly = false }: { children: React.ReactNode, adminOnly?: boolean }) {
   const isAuthenticated = !!localStorage.getItem('token');
   const isAdmin = localStorage.getItem('tipoUsuario') === 'admin';
-  
+
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
-  
+
   if (adminOnly && !isAdmin) {
     return <ErrorRedirect message="Acesso não autorizado" />;
   }
-  
+
   return <>{children}</>;
 }
 
@@ -58,41 +59,41 @@ function App() {
             <Route path="/carrinho" element={<Carrinho />} />
             <Route path="/finalizar-compra" element={<FinalizarCompra />} />
 
-            
+
             {/* Rota protegida para área secreta */}
-            <Route 
-              path="/elitinho" 
+            <Route
+              path="/elitinho"
               element={
                 <ProtectedRoute>
                   <Secreto />
                 </ProtectedRoute>
-              } 
+              }
             />
-            
+
             {/* Rotas de administração */}
-            <Route 
-              path="/admin/carrinhos" 
+            <Route
+              path="/admin/carrinhos"
               element={
                 <ProtectedRoute adminOnly>
                   <ListarCarrinhos />
                 </ProtectedRoute>
-              } 
+              }
             />
-            <Route 
-              path="/admin/dashboard" 
+            <Route
+              path="/admin/dashboard"
               element={
                 <ProtectedRoute adminOnly>
                   <DashboardAdmin />
                 </ProtectedRoute>
-              } 
+              }
             />
             <Route path="/admin/produtos" element={<ProdutosLista />} />
-            
+
             {/* Rota de erro genérica */}
             <Route path="/error" element={<Error />} />
 
             <Route path="/produto/:id" element={<DetalheProdutoPage />} />
-            
+
             {/* Rota 404 - Redireciona para a página de erro com a mensagem */}
             <Route path="*" element={
               <Navigate to={
@@ -102,10 +103,14 @@ function App() {
                 }
               } replace />
             } />
+
+            <Route path="/pedido-concluido" element={<PedidoConcluido />} />
+            <Route path="/pagamento/sucesso" element={<PedidoConcluido />} />
+            
           </Routes>
         </div>
       </main>
-      
+
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12 border-t-2 border-gray-800 mt-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
