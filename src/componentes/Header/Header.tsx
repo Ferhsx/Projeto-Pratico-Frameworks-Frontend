@@ -1,16 +1,32 @@
 import { useNavigate, Link } from 'react-router-dom';
-// Importa a função de logout que já existe
 import { handleLogout } from '../login/auth';
+import { useState, useEffect } from 'react';
 
 function Header() {
     const navigate = useNavigate();
+    const [nome, setNome] = useState<string | null>(null);
+    const [tipo, setTipo] = useState<string | null>(null);
 
-    // Lê os dados salvos no login
-    const nome = localStorage.getItem("nomeUsuario");
-    const tipo = localStorage.getItem("tipoUsuario");
+    // 🔧 Usar useEffect para sincronizar com localStorage
+    useEffect(() => {
+        // Lê os dados do localStorage
+        const nomeArmazenado = localStorage.getItem("nomeUsuario");
+        const tipoArmazenado = localStorage.getItem("tipoUsuario");
+        
+        setNome(nomeArmazenado);
+        setTipo(tipoArmazenado);
 
-    // Se o usuário não estiver logado (sem nome ou tipo),
-    // o header não exibe nada.
+        // Ouve mudanças no localStorage (quando outro tab muda)
+        const handleStorageChange = () => {
+            setNome(localStorage.getItem("nomeUsuario"));
+            setTipo(localStorage.getItem("tipoUsuario"));
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+        return () => window.removeEventListener('storage', handleStorageChange);
+    }, []);
+
+    // Se o usuário não estiver logado
     if (!nome || !tipo) {
         return (
             <header className="bg-white dark:bg-gray-900 border-b-2 border-gray-300 dark:border-gray-700 shadow-md px-8 py-3">
@@ -27,7 +43,8 @@ function Header() {
                         </Link>
                     </div>
                 </div>
-            </header>);
+            </header>
+        );
     }
 
     return (
