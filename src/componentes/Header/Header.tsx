@@ -25,6 +25,9 @@ function Header() {
                         <Link to="/cadastro" className="bg-black dark:bg-white text-white dark:text-black px-6 py-2 rounded-md font-bold hover:bg-gray-800 dark:hover:bg-gray-200 transition-all transform hover:scale-105 shadow-md">
                             Cadastre-se
                         </Link>
+                        <Link to="/solicitar-admin" className="nav-link">
+                            Tornar-se Admin
+                        </Link>
                     </div>
                 </div>
             </header>);

@@ -14,7 +14,7 @@ import FinalizarCompra from './pages/FinalizarCompra'
 import { useEffect } from 'react'
 import DetalheProdutoPage from './componentes/ProdutosLista/Produto'
 import PedidoConcluido from './pages/PedidoConcluido';
-
+import SolicitarAcessoAdmin from './componentes/admin/Solicitacao'
 
 // Componente para redirecionar com mensagem de erro
 function ErrorRedirect({ message }: { message: string }) {
