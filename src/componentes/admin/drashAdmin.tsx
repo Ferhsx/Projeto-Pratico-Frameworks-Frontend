@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { adminService } from '../../services/adminService';
 import { Link } from 'react-router-dom';
-import GerenciarSolicitacoes from './GerenciarSolicitacao';
 
 // Tipos para os dados que esperamos da API
 
@@ -43,9 +42,6 @@ export default function DashboardAdmin() {
     return (
         <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
             <h1>Dashboard Administrativo</h1>
-            <div style={{ margin: '30px 0' }}>
-                <GerenciarSolicitacoes />
-            </div>
 
             <div style={{ display: 'flex', gap: '20px', margin: '20px 0' }}>
                 <div style={{ border: '1px solid #ccc', padding: '20px', borderRadius: '8px', textAlign: 'center' }}>

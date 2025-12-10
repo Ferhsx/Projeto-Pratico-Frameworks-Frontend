@@ -24,7 +24,6 @@ function Login() {
         }).then(resposta => {
             if (resposta.status === 200 && resposta.data) {
                 localStorage.setItem("token", resposta.data.token);
-                localStorage.setItem("tipoUsuario", resposta.data.tipoUsuario);
                 localStorage.setItem("nomeUsuario", resposta.data.nome);
                 localStorage.setItem("usuarioId", resposta.data.usuarioId);
                 navigate("/");

@@ -18,7 +18,6 @@ function Cadastrar() {
             idade: Number(formData.get("idade") ?? 0),
             email: String(formData.get("email") ?? "").trim(),
             senha: String(formData.get("senha") ?? ""),
-            tipoUsuario: String(formData.get("tipoUsuario") ?? "")
         };
 
         console.log("Enviando POST /cadastro payload:", payload);
@@ -114,21 +113,6 @@ function Cadastrar() {
                             required 
                             className="w-full p-3 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
-                    </div>
-                    
-                    <div>
-                        <label className="block text-sm font-medium text-gray-300 mb-1">
-                            Tipo de Usuário
-                        </label>
-                        <select 
-                            name="tipoUsuario" 
-                            required
-                            className="w-full p-3 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        >
-                            <option value="">Selecione o tipo de usuário</option>
-                            <option value="comum">Comum</option>
-                            <option value="admin">Admin</option>
-                        </select>
                     </div>
                     
                     <button 
