@@ -46,18 +46,21 @@ api.interceptors.request.use((config) => {
     return config
 })
 
-//Redirecionar para o LOGIN quando o usuário não tiver permissão.
+// Interceptor de resposta atualizado
 api.interceptors.response.use(
-    (response)=>response,
-    (error)=>{
-        if(error?.code==="ERR_NETWORK"){
-            window.location.href=`/error?mensagem=${encodeURIComponent("Ligue o Servidor-> NPM RUN DEV")}`
-        }
+    (response) => response,
+    (error) => {
+        // O erro de rede agora será tratado pelo componente chamador (ex: HomePage.tsx)
+
         const status = error?.response?.status;
-        if(status===401&&!(error?.response?.config?.url.endsWith("/login"))){
+        
+        // Redirecionar para o login em caso de 401, exceto na própria página de login
+        if (status === 401 && !(error?.response?.config?.url.endsWith("/login"))) {
             localStorage.removeItem("token")
-            window.location.href=`/login?mensagem=${encodeURIComponent("Token inválido")}`
+            window.location.href=`/login?mensagem=${encodeURIComponent("Token de acesso inválido ou expirado.")}` 
         }
+
+        // Se for um erro 404, 500 ou qualquer outro, o componente chamador deve lidar com ele
         return Promise.reject(error)
     }
 )
