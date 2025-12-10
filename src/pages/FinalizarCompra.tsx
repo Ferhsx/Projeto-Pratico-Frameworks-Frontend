@@ -109,37 +109,8 @@ export default function FinalizarCompra() {
   }
 
   useEffect(() => {
-    async function prepare() {
-      try {
-        // Carrega os itens do carrinho
-        await carregarCarrinho()
-
-        // Se não veio amount pela query, usa o total do carrinho
-        if (!queryAmount && carrinho.total > 0) {
-          const centavos = Math.round(carrinho.total * 100)
-          setAmount(centavos)
-        }
-
-        // Cria o PaymentIntent apenas se tiver itens no carrinho
-        if (carrinho.itens.length > 0) {
-          const result = await api.post('/create-payment-intent', { 
-            amount: amount || Math.round(carrinho.total * 100), 
-            currency: 'brl' 
-          })
-          
-          if (result?.data?.clientSecret) {
-            setClientSecret(result.data.clientSecret)
-          } else {
-            setError('Erro ao preparar o pagamento')
-          }
-        }
-      } catch (err: any) {
-        console.error('Erro ao preparar pagamento:', err)
-        setError(err?.response?.data?.error || err.message || 'Erro ao preparar o pagamento')
-      }
-    }
-
-    prepare()
+    // Apenas carrega o carrinho
+    carregarCarrinho()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -164,6 +135,8 @@ export default function FinalizarCompra() {
     }
 
     try {
+      setProcessing(true)
+      
       const cardNumber = elements.getElement(CardNumberElement)
       if (!cardNumber) {
         throw new Error('Elemento de cartão não encontrado')
@@ -181,20 +154,31 @@ export default function FinalizarCompra() {
 
       // Enviar para o backend
       const response = await api.post('/criar-pagamento-cartao', {
-        paymentMethodId: paymentMethod.id,
-        amount: amount, // em centavos
-        currency: 'brl',
+        paymentMethodId: paymentMethod.id
       })
 
-      const { clientSecret, requiresAction } = response.data
+      const { clientSecret, requiresAction, orderId } = response.data
 
-      if (requiresAction) {
-        const { error: confirmError } = await stripe.confirmCardPayment(clientSecret)
+      if (requiresAction && clientSecret) {
+        // Se precisar de autenticação 3D Secure
+        const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(clientSecret)
         if (confirmError) throw confirmError
+        
+        if (paymentIntent?.status === 'succeeded') {
+          setPaymentStatus('succeeded')
+          // Redirecionar para página de sucesso com o ID do pedido
+          navigate(`/pagamento/sucesso?pedido=${orderId}`)
+        } else {
+          throw new Error('Pagamento não autorizado')
+        }
+      } else if (response.data.success) {
+        // Pagamento bem-sucedido sem autenticação adicional
+        setPaymentStatus('succeeded')
+        // Redirecionar para página de sucesso com o ID do pedido
+        navigate(`/pagamento/sucesso?pedido=${orderId}`)
+      } else {
+        throw new Error('Erro ao processar o pagamento')
       }
-
-      // Pagamento bem-sucedido
-      setPaymentStatus('succeeded')
       
       // Limpar carrinho após pagamento bem-sucedido
       try {
