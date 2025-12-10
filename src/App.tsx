@@ -105,8 +105,7 @@ function App() {
 
             <Route path="/pedido-concluido" element={<PedidoConcluido />} />
             <Route path="/pagamento/sucesso" element={<PedidoConcluido />} />
-
-            />
+            
           </Routes>
         </div>
       </main>
